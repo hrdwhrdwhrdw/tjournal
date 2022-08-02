@@ -8,17 +8,19 @@ interface MainLayoutProps {
   contentFullWidth?: boolean;
   children: React.ReactNode;
   className?: string;
+  hideMenu?: boolean
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
   contentFullWidth,
   hideComments,
-  className
+  className,
+  hideMenu
 }) => {
   return (
     <div className={clsx("wrapper", className)}>
-      <Navbar />
+      {!hideMenu && <Navbar />}
       <div className={clsx("content", { "content--full": contentFullWidth })}>
         {children}
       </div>

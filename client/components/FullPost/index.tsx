@@ -8,7 +8,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 const FullPost = () => {
   return (
     <Paper className={styles.paper} elevation={0}>
-      <div className={styles.fullPostWrapper} style={{ margin: "0 auto" }}>
+      <div className="container">
         <Typography className={styles.title} variant="h5">
           Зачем Китаю скандал с Пелоси
         </Typography>
@@ -74,7 +74,6 @@ const FullPost = () => {
             </Button>
           </div>
         </div>
-        
       </div>
     </Paper>
   );

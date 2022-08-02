@@ -1,0 +1,31 @@
+
+.commentItem {
+  margin-bottom: 25px;
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 20px;
+  }
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+.text {
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+
+.postTitle {
+  font-size: 15px;
+  font-weight: 400;
+}

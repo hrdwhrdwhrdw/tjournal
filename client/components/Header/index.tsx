@@ -32,11 +32,15 @@ const Header: React.FC = () => {
           <SearchIcon />
           <input type="text" placeholder="Поиск" />
         </div>
-        <div >
-          <Button className={styles.createButton} variant="contained">
-            <AddIcon />
-            Создать
-          </Button>
+        <div>
+          <Link href="/write">
+            <a>
+              <Button className={styles.createButton} variant="contained">
+                <AddIcon />
+                Создать
+              </Button>
+            </a>
+          </Link>
         </div>
       </div>
       <div className="d-flex align-center">

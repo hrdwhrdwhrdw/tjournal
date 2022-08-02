@@ -52,7 +52,7 @@ ul {
 
 .main-layout-white {
   background-color: #fff;
-  height: 100vh;
+  height: calc(100vh - 60px);
 }
 
 .container {

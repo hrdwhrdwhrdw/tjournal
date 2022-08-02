@@ -3,7 +3,16 @@ import { Typography, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import styles from "./Comment.module.scss";
 
-const Comment: React.FC = () => {
+type CommentPostProps = {
+  user: {
+    fullName: string;
+    avatar: string;
+  };
+  text: string;
+  createdAt: string;
+};
+
+const Comment: React.FC<CommentPostProps> = ({ user, text, createdAt }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event: any) => {
@@ -17,18 +26,14 @@ const Comment: React.FC = () => {
   return (
     <div className={styles.comment}>
       <div className={styles.userInfo}>
-        <img
-          src="https://leonardo.osnova.io/2d20257c-fec5-4b3e-7f60-055c86f24a4d/-/scale_crop/108x108/-/format/webp/"
-          alt=""
-          className={styles.image}
-        />
+        <img src={user.avatar} alt="" className={styles.image} />
         <div className="d-flex flex-column">
-          <b>Добряк злой</b>
-          <span>6 часов</span>
+          <b>{user.fullName}</b>
+          <span>{createdAt}</span>
         </div>
       </div>
       <Typography className={styles.text}>
-        Имперцы - опухоль человечества
+        {text}
       </Typography>
       <Button disableRipple className={styles.replyButton}>
         Ответить

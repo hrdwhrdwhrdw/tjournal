@@ -29,34 +29,3 @@
   }
 }
 
-.commentItem {
-  margin-bottom: 25px;
-
-  &:not(:last-of-type) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 20px;
-  }
-}
-
-.userInfo {
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 24px;
-    height: 24px;
-    border-radius: 3px;
-    margin-right: 8px;
-  }
-}
-
-.text {
-  font-size: 16px;
-  margin-top: 8px;
-  margin-bottom: 5px;
-}
-
-.postTitle {
-  font-size: 15px;
-  font-weight: 500;
-}

@@ -1,0 +1,30 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.9.2",
+    "clsx": "^1.2.1",
+    "macro-css": "^1.0.5",
+    "next": "^12.2.4-canary.8",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "saas": "^1.0.0",
+    "sass": "^1.54.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.6.3",
+    "eslint": "8.20.0",
+    "eslint-config-next": "12.2.3",
+    "typescript": "^4.7.4"
+  }
+}

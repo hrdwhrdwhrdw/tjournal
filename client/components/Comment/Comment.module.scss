@@ -1,0 +1,46 @@
+.comment {
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.userInfo {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: flex-start;
+
+  img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  b {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  span {
+    font-size: 12px;
+    opacity: .8;
+  }
+}
+
+.replyButton {
+  font-weight: 400;
+  margin-top: 8px;
+  color: black;
+  opacity: 0.6;
+  font-size: 14px;
+  padding: 0;
+  text-transform: capitalize;
+  transition: none;
+
+  &:hover {
+    color: #0356c2
+  }
+
+  svg {
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,25 @@
+.popupWrapper {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  bottom: -250%;
+  left: -50%;
+  z-index: 30;
+  border-radius: 8px;
+
+  ul {
+    color: black !important;
+  }
+
+  li {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    border-radius: 0 !important;
+    overflow: hidden !important; 
+  }
+}

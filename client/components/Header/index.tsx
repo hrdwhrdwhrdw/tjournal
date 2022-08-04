@@ -1,16 +1,25 @@
-import React from "react";
-import styles from "./Header.module.scss";
-import { Paper, Button, Avatar } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import AddIcon from "@mui/icons-material/Add";
-import MessageIcon from "@mui/icons-material/Message";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MenuIcon from "@mui/icons-material/Menu";
+import MessageIcon from "@mui/icons-material/Message";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import SearchIcon from "@mui/icons-material/Search";
+import { Avatar, Button, IconButton, Paper } from "@mui/material";
 import Link from "next/link";
+import React from "react";
+import AuthDialog from "../AuthDialog/AuthDialog";
+import styles from "./Header.module.scss";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 
 const Header: React.FC = () => {
+  const [authVisible, setAuthVisible] = React.useState(true);
+  const closeAuthDialog = () => {
+    setAuthVisible(false);
+  };
+  const openAuthDialog = () => {
+    setAuthVisible(true);
+  };
+
   return (
     <Paper classes={{ root: styles.root }}>
       <div className="d-flex align-center">
@@ -50,7 +59,7 @@ const Header: React.FC = () => {
         <IconButton>
           <NotificationsIcon />
         </IconButton>
-        <Link href="/profile/1">
+        {/* <Link href="/profile/1">
           <a className="d-flex align-center">
             <Avatar
               className={styles.avatar}
@@ -59,8 +68,12 @@ const Header: React.FC = () => {
             />
             <ExpandMoreIcon />
           </a>
-        </Link>
+        </Link> */}
+        <div className={styles.loginButton} onClick={openAuthDialog}>
+          <PermIdentityIcon /> <b>Войти</b>
+        </div>
       </div>
+      <AuthDialog open={authVisible} onClose={closeAuthDialog} />
     </Paper>
   );
 };

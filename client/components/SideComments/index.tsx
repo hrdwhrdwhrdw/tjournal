@@ -19,7 +19,7 @@ export const SideComments = () => {
       </h3>
       {visible &&
         data.comments.popular.map((obj) => (
-          <CommentItem key={obj.id} {...obj} />
+          <CommentItem key={obj.user.id} {...obj} />
         ))}
     </div>
   );

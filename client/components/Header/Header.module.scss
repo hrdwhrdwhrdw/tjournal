@@ -91,3 +91,19 @@
     text-align: center;
   }
 }
+
+.loginButton {
+  padding: 10px;
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    color: #eba33e
+  }
+  svg {
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+  }
+}

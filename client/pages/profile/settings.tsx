@@ -20,6 +20,7 @@ const Settings = () => {
             label="Никнейм"
           />
           <TextField
+            className="mb-15"
             variant="outlined"
             size="small"
             fullWidth
@@ -27,6 +28,7 @@ const Settings = () => {
             label="Почта"
           />
           <TextField
+            type="password"
             variant="outlined"
             size="small"
             fullWidth

@@ -31,6 +31,20 @@ export const theme = createTheme({
               backgroundColor: "#437CCE",
             },
           },
+          "&.Mui-disabled": {
+            opacity: "0.5",
+            pointerEvents: "all",
+            cursor: "not-allowed"
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          "&.MuiDialog-paper": {
+            boxShadow: "none"
+          },
         },
       },
     },

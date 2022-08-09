@@ -8,6 +8,6 @@ export declare class UserService {
     create(dto: CreateUserDto): Promise<CreateUserDto & UserEntity>;
     findAll(): Promise<UserEntity[]>;
     findOne(id: number): string;
-    update(id: number, updateUserDto: UpdateUserDto): string;
+    update(id: number, dto: UpdateUserDto): Promise<import("typeorm").UpdateResult>;
     remove(id: number): string;
 }

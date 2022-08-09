@@ -30,8 +30,8 @@ let UserService = class UserService {
     findOne(id) {
         return `This action returns a #${id} user`;
     }
-    update(id, updateUserDto) {
-        return `This action updates a #${id} user`;
+    update(id, dto) {
+        return this.repository.update(id, dto);
     }
     remove(id) {
         return `This action removes a #${id} user`;

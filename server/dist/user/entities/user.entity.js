@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = void 0;
 const typeorm_1 = require("typeorm");
-const class_validator_1 = require("class-validator");
 let UserEntity = class UserEntity {
 };
 __decorate([
@@ -24,15 +23,20 @@ __decorate([
 ], UserEntity.prototype, "fullName", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    (0, class_validator_1.IsEmail)({
-        message: 'неверный mail',
-    }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "email", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),
+    __metadata("design:type", Date)
+], UserEntity.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)({ type: 'timestamp' }),
+    __metadata("design:type", Date)
+], UserEntity.prototype, "updatedAt", void 0);
 UserEntity = __decorate([
     (0, typeorm_1.Entity)('users')
 ], UserEntity);

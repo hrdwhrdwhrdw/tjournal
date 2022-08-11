@@ -1,13 +1,17 @@
-import { IsEmail, Min } from 'class-validator';
+import { IsEmail, Length } from 'class-validator';
+import { UniqueOnDatabase } from 'src/auth/validators/UniqueValidationi';
+import { UserEntity } from '../entities/user.entity';
 
 export class CreateUserDto {
-  @Min(6, { message: 'Имя должно состоять из более 5 символов' })
+  @Length(5, 30, { message: 'Имя должно состоять из более 5 символов' })
   fullName: string;
-  @IsEmail(
-    { requireDisplayName: true },
-    { message: 'Введите корректный email' }
-  )
+
+  @IsEmail(undefined, { message: 'Введите корректный email' })
+  @UniqueOnDatabase(UserEntity, {
+    message: 'Почта уже существует',
+  })
   email: string;
-  @Min(6, { message: 'Пароль должен состоять из более 5 символов' })
+
+  @Length(5, 30, { message: 'Пароль должен состоять из более 5 символов' })
   password?: string;
 }

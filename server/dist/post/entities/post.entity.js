@@ -26,13 +26,15 @@ __decorate([
     __metadata("design:type", String)
 ], PostEntity.prototype, "body", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({
+        default: 0,
+    }),
     __metadata("design:type", Number)
 ], PostEntity.prototype, "views", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], PostEntity.prototype, "tags", void 0);
+], PostEntity.prototype, "tag", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),
     __metadata("design:type", Date)

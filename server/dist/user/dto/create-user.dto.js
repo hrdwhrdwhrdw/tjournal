@@ -11,18 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
+const UniqueValidationi_1 = require("../../auth/validators/UniqueValidationi");
+const user_entity_1 = require("../entities/user.entity");
 class CreateUserDto {
 }
 __decorate([
-    (0, class_validator_1.Min)(6, { message: 'Имя должно состоять из более 5 символов' }),
+    (0, class_validator_1.Length)(5, 30, { message: 'Имя должно состоять из более 5 символов' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "fullName", void 0);
 __decorate([
-    (0, class_validator_1.IsEmail)({ requireDisplayName: true }, { message: 'Введите корректный email' }),
+    (0, class_validator_1.IsEmail)(undefined, { message: 'Введите корректный email' }),
+    (0, UniqueValidationi_1.UniqueOnDatabase)(user_entity_1.UserEntity, {
+        message: 'Почта уже существует',
+    }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.Min)(6, { message: 'Пароль должен состоять из более 5 символов' }),
+    (0, class_validator_1.Length)(5, 30, { message: 'Пароль должен состоять из более 5 символов' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
 exports.CreateUserDto = CreateUserDto;

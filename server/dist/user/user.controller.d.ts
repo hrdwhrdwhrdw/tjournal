@@ -1,12 +1,15 @@
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from './user.service';
+import { SearchUserDto } from './dto/search-user.dto';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    create(dto: CreateUserDto): Promise<CreateUserDto & import("./entities/user.entity").UserEntity>;
     findAll(): Promise<import("./entities/user.entity").UserEntity[]>;
-    findOne(id: string): string;
-    update(id: string, updateUserDto: UpdateUserDto): Promise<import("typeorm").UpdateResult>;
-    remove(id: string): string;
+    getProfile(req: any): any;
+    update(req: any, updateUserDto: UpdateUserDto): Promise<import("typeorm").UpdateResult>;
+    search(dto: SearchUserDto): Promise<{
+        items: import("./entities/user.entity").UserEntity[];
+        total: number;
+    }>;
+    findOne(id: string): Promise<import("./entities/user.entity").UserEntity>;
 }

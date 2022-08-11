@@ -14,36 +14,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
-const user_service_1 = require("./user.service");
-const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const user_service_1 = require("./user.service");
+const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
+const search_user_dto_1 = require("./dto/search-user.dto");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    create(dto) {
-        return this.userService.create(dto);
-    }
     findAll() {
         return this.userService.findAll();
     }
+    getProfile(req) {
+        return req.user;
+    }
+    update(req, updateUserDto) {
+        return this.userService.update(+req.user.id, updateUserDto);
+    }
+    search(dto) {
+        return this.userService.search(dto);
+    }
     findOne(id) {
-        return this.userService.findOne(+id);
-    }
-    update(id, updateUserDto) {
-        return this.userService.update(+id, updateUserDto);
-    }
-    remove(id) {
-        return this.userService.remove(+id);
+        return this.userService.findById(+id);
     }
 };
-__decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -51,27 +45,36 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('me'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getProfile", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Patch)('me'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "update", null);
+__decorate([
+    (0, common_1.Get)('search'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [search_user_dto_1.SearchUserDto]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "search", null);
+__decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "remove", null);
 UserController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_service_1.UserService])

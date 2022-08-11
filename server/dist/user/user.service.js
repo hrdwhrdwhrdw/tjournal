@@ -27,14 +27,40 @@ let UserService = class UserService {
     findAll() {
         return this.repository.find();
     }
-    findOne(id) {
-        return `This action returns a #${id} user`;
+    findById(id) {
+        return this.repository.findOne({
+            where: {
+                id: id,
+            },
+        });
+    }
+    findByCond(cond) {
+        return this.repository.findOne({
+            where: {
+                email: cond.email,
+                password: cond.password,
+            },
+        });
     }
     update(id, dto) {
         return this.repository.update(id, dto);
     }
-    remove(id) {
-        return `This action removes a #${id} user`;
+    async search(dto) {
+        const qb = this.repository.createQueryBuilder('u');
+        qb.limit(dto.limit || 0);
+        qb.take(dto.take || 10);
+        if (dto.email) {
+            qb.andWhere(`u.email ILIKE :email`);
+        }
+        if (dto.fullName) {
+            qb.andWhere(`u.fullName ILIKE :fullName`);
+        }
+        qb.setParameters({
+            email: `%${dto.email}%`,
+            fullName: `%${dto.fullName}%`,
+        });
+        const [items, total] = await qb.getManyAndCount();
+        return { items, total };
     }
 };
 UserService = __decorate([

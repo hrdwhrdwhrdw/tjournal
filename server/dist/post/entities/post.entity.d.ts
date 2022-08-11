@@ -3,7 +3,7 @@ export declare class PostEntity {
     title: string;
     body: string;
     views: number;
-    tags?: string;
+    tag?: string;
     createdAt: Date;
     updatedAt: Date;
 }

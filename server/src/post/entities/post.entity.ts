@@ -1,7 +1,10 @@
+import { OutputBlockData } from '../../../dist/post/dto/create-post.dto';
+import { UserEntity } from '../../user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,8 +17,16 @@ export class PostEntity {
   @Column()
   title: string;
 
+  @Column({ type: 'jsonb' })
+  body: OutputBlockData[];
+
   @Column()
-  body: string;
+  description: string;
+
+  @ManyToOne(() => UserEntity, {
+    eager: true,
+  })
+  user: UserEntity;
 
   @Column({
     default: 0,

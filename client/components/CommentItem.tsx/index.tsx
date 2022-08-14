@@ -1,6 +1,7 @@
 import styles from "./CommentItem.module.scss";
 import { Avatar } from "@mui/material";
 import Link from 'next/link';
+import { OutputData } from '@editorjs/editorjs';
 
 export type ResponseUser = {
   fullName: string;
@@ -9,6 +10,7 @@ export type ResponseUser = {
 };
 
 export type PostItem = {
+  body: OutputData['blocks'];
   title: string;
   id: number
 };

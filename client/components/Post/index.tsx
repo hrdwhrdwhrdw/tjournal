@@ -5,19 +5,22 @@ import { Paper, Typography } from "@mui/material";
 import Link from "next/link";
 import PostActions from "../PostActions";
 
-const Post: React.FC = () => {
+type PostType = {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl?: string;
+};
+
+const Post: React.FC<PostType> = ({ id, title, description }) => {
   return (
     <Paper className={styles.paper}>
       <Typography variant="h5" className={styles.title}>
-        <Link href="/news/test123">
-          <a>Ох, блин... Чуть-чуть про Польшу</a>
+        <Link href={`/news/${id}`}>
+          <a>{title}</a>
         </Link>
       </Typography>
-      <Typography className="mt-15 mb-15">
-        Что-то тут активизировались статьи от людей, убивающих белорусских
-        лосей. Статьи, полные клюквы, хреновых фото и бесполезной информации.
-        Поэтому я решил вмешаться и разбавить своей дерьмовой информацией.
-      </Typography>
+      <Typography className="mt-15 mb-15">{description}</Typography>
       <Image
         height={500}
         width={640}

@@ -6,19 +6,30 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
 import { Avatar, Button, IconButton, Paper } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import AuthDialog from "../AuthDialog/AuthDialog";
 import styles from "./Header.module.scss";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { useAppSelector } from "../../hooks/hooks";
+import { selectUserData } from "../../redux/slices/userSlice";
 
 const Header: React.FC = () => {
+  const userData = useAppSelector(selectUserData);
   const [authVisible, setAuthVisible] = React.useState(true);
+
   const closeAuthDialog = () => {
     setAuthVisible(false);
   };
+
   const openAuthDialog = () => {
     setAuthVisible(true);
   };
+
+  useEffect(() => {
+    if (authVisible && userData) {
+      setAuthVisible(false)
+    }
+  }, [authVisible, userData]);
 
   return (
     <Paper classes={{ root: styles.root }}>
@@ -59,19 +70,22 @@ const Header: React.FC = () => {
         <IconButton>
           <NotificationsIcon />
         </IconButton>
-        {/* <Link href="/profile/1">
-          <a className="d-flex align-center">
-            <Avatar
-              className={styles.avatar}
-              alt="Remy Sharp"
-              src="https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/"
-            />
-            <ExpandMoreIcon />
-          </a>
-        </Link> */}
-        <div className={styles.loginButton} onClick={openAuthDialog}>
-          <PermIdentityIcon /> <b>Войти</b>
-        </div>
+        {userData ? (
+          <Link href="/profile/1">
+            <a className="d-flex align-center">
+              <Avatar
+                className={styles.avatar}
+                alt="Remy Sharp"
+                src="https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/"
+              />
+              <ExpandMoreIcon />
+            </a>
+          </Link>
+        ) : (
+          <div className={styles.loginButton} onClick={openAuthDialog}>
+            <PermIdentityIcon /> <b>Войти</b>
+          </div>
+        )}
       </div>
       <AuthDialog open={authVisible} onClose={closeAuthDialog} />
     </Paper>

@@ -1,20 +1,16 @@
-/* eslint-disable prettier/prettier */
 import {
   registerDecorator,
-  ValidationArguments,
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { getManager } from 'typeorm';
 
 @ValidatorConstraint({ async: true })
 export class UniqueOnDatabaseExistConstraint
   implements ValidatorConstraintInterface
 {
-  async validate(value: any, args: ValidationArguments) {
-    const entity = args.object[`class_entity_${args.property}`];
-    return true
+  async validate() {
+    return true;
   }
 }
 
@@ -23,7 +19,7 @@ export function UniqueOnDatabase(
   validationOptions?: ValidationOptions
 ) {
   validationOptions = {
-    ...{ message: '$value already exists. Choose another.' },
+    ...{ message: 'Value already exists. Choose another.' },
     ...validationOptions,
   };
   return function (object: any, propertyName: string) {

@@ -6,7 +6,12 @@ import { SearchPostDto } from './dto/search-post.dto';
 export declare class PostService {
     private repository;
     constructor(repository: Repository<PostEntity>);
-    create(dto: CreatePostDto): Promise<CreatePostDto & PostEntity>;
+    create(dto: CreatePostDto): Promise<{
+        title: string;
+        body: import("./dto/create-post.dto").OutputBlockData[];
+        tags: string;
+        description: any;
+    } & PostEntity>;
     findAll(): Promise<PostEntity[]>;
     popular(): Promise<{
         items: PostEntity[];

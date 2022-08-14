@@ -18,11 +18,14 @@ const post_service_1 = require("./post.service");
 const create_post_dto_1 = require("./dto/create-post.dto");
 const update_post_dto_1 = require("./dto/update-post.dto");
 const search_post_dto_1 = require("./dto/search-post.dto");
+const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
+const user_decorator_1 = require("../decorators/user.decorator");
+const user_entity_1 = require("../user/entities/user.entity");
 let PostController = class PostController {
     constructor(postService) {
         this.postService = postService;
     }
-    create(dto) {
+    create(user, dto) {
         return this.postService.create(dto);
     }
     findAll() {
@@ -45,10 +48,12 @@ let PostController = class PostController {
     }
 };
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, user_decorator_1.User)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_post_dto_1.CreatePostDto]),
+    __metadata("design:paramtypes", [user_entity_1.UserEntity, create_post_dto_1.CreatePostDto]),
     __metadata("design:returntype", void 0)
 ], PostController.prototype, "create", null);
 __decorate([
@@ -78,6 +83,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PostController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -86,6 +92,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PostController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

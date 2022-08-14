@@ -2,10 +2,16 @@ import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { SearchPostDto } from './dto/search-post.dto';
+import { UserEntity } from '../user/entities/user.entity';
 export declare class PostController {
     private readonly postService;
     constructor(postService: PostService);
-    create(dto: CreatePostDto): Promise<CreatePostDto & import("./entities/post.entity").PostEntity>;
+    create(user: UserEntity, dto: CreatePostDto): Promise<{
+        title: string;
+        body: import("./dto/create-post.dto").OutputBlockData[];
+        tags: string;
+        description: any;
+    } & import("./entities/post.entity").PostEntity>;
     findAll(): Promise<import("./entities/post.entity").PostEntity[]>;
     getPopularPosts(): Promise<{
         items: import("./entities/post.entity").PostEntity[];

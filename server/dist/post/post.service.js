@@ -22,7 +22,14 @@ let PostService = class PostService {
         this.repository = repository;
     }
     create(dto) {
-        return this.repository.save(dto);
+        var _a;
+        const firstParagraph = (_a = dto.body.find((obj) => obj.type === 'paragraph')) === null || _a === void 0 ? void 0 : _a.data.text;
+        return this.repository.save({
+            title: dto.title,
+            body: dto.body,
+            tags: dto.tag,
+            description: firstParagraph || '',
+        });
     }
     findAll() {
         return this.repository.find({
@@ -80,6 +87,7 @@ let PostService = class PostService {
         });
     }
     async update(id, dto) {
+        var _a;
         const find = await this.repository.findOne({
             where: {
                 id: id,
@@ -88,7 +96,13 @@ let PostService = class PostService {
         if (!find) {
             throw new common_1.NotFoundException('Статья не найдена');
         }
-        return this.repository.update(id, dto);
+        const firstParagraph = (_a = dto.body.find((obj) => obj.type === 'paragraph')) === null || _a === void 0 ? void 0 : _a.data.text;
+        return this.repository.update(id, {
+            title: dto.title,
+            body: dto.body,
+            tag: dto.tag,
+            description: firstParagraph || '',
+        });
     }
     async remove(id) {
         const find = await this.repository.findOne({

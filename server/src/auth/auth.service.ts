@@ -17,7 +17,7 @@ export class AuthService {
       password,
     });
     if (user && user.password === password) {
-      const { password, ...result } = user;
+      const { ...result } = user;
       return result;
     }
     return null;
@@ -29,8 +29,8 @@ export class AuthService {
   }
 
   async login(user: UserEntity) {
-    const { password, ...userData } = user;
-    const payload = { email: user.email, sub: user.id };
+    const { ...userData } = user;
+    // const payload = { email: user.email, sub: user.id };
     return {
       ...userData,
       token: this.generateJwtToken(userData),
@@ -39,7 +39,7 @@ export class AuthService {
 
   async register(dto: CreateUserDto) {
     try {
-      const { password, ...userData } = await this.userService.create(dto);
+      const { ...userData } = await this.userService.create(dto);
       return {
         ...userData,
         token: this.generateJwtToken(userData),

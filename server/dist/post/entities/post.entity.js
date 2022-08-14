@@ -22,9 +22,13 @@ __decorate([
     __metadata("design:type", String)
 ], PostEntity.prototype, "title", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'jsonb' }),
+    __metadata("design:type", Array)
+], PostEntity.prototype, "body", void 0);
+__decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], PostEntity.prototype, "body", void 0);
+], PostEntity.prototype, "description", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         default: 0,

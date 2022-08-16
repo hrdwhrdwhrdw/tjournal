@@ -1,12 +1,13 @@
-import React from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import styles from "./SideComments.module.scss";
 import clsx from "clsx";
-import data from "../../data";
+import React from "react";
+import useComments from "../../hooks/useComments";
 import { CommentItem } from "../CommentItem.tsx/index";
+import styles from "./SideComments.module.scss";
 
 export const SideComments = () => {
   const [visible, setVisible] = React.useState(true);
+  const { comments } = useComments();
 
   const toggleVisible = () => {
     setVisible(!visible);
@@ -18,7 +19,7 @@ export const SideComments = () => {
         Комментарии <ArrowRightAltIcon />
       </h3>
       {visible &&
-        data.comments.popular.map((obj) => (
+        comments.map((obj) => (
           <CommentItem key={obj.user.id} {...obj} />
         ))}
     </div>

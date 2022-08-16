@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
+const comment_entity_1 = require("../comment/entities/comment.entity");
 let UserService = class UserService {
     constructor(repository) {
         this.repository = repository;
@@ -24,8 +25,16 @@ let UserService = class UserService {
     create(dto) {
         return this.repository.save(dto);
     }
-    findAll() {
-        return this.repository.find();
+    async findAll() {
+        const arr = await this.repository
+            .createQueryBuilder('u')
+            .leftJoinAndMapMany('u.comments', comment_entity_1.CommentEntity, 'comment', 'comment.userId = u.id')
+            .loadRelationCountAndMap('u.commentsCount', 'u.comments', 'comments')
+            .getMany();
+        return arr.map((obj) => {
+            delete obj.comments;
+            return obj;
+        });
     }
     findById(id) {
         return this.repository.findOne({

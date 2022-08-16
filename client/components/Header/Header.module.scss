@@ -1,3 +1,4 @@
+
 .root {
   position: sticky;
   top: 0;
@@ -106,4 +107,10 @@
     width: 30px;
     height: 30px;
   }
+}
+
+.searchPopup {
+  position: absolute;
+  width: 100%;
+  top: 40px;
 }

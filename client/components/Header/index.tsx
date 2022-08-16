@@ -4,7 +4,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
-import { Avatar, Button, IconButton, Paper } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  Paper,
+} from "@mui/material";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import AuthDialog from "../AuthDialog/AuthDialog";
@@ -12,10 +20,15 @@ import styles from "./Header.module.scss";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { useAppSelector } from "../../hooks/hooks";
 import { selectUserData } from "../../redux/slices/userSlice";
+import { useState } from "react";
+import { PostItem } from "../CommentItem.tsx/index";
+import { Api } from "../../utils/api/index";
 
 const Header: React.FC = () => {
   const userData = useAppSelector(selectUserData);
   const [authVisible, setAuthVisible] = React.useState(true);
+  const [posts, setPosts] = useState<PostItem[]>([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const closeAuthDialog = () => {
     setAuthVisible(false);
@@ -27,9 +40,19 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (authVisible && userData) {
-      setAuthVisible(false)
+      setAuthVisible(false);
     }
   }, [authVisible, userData]);
+
+  const handleChangeInput = async (e: any) => {
+    setSearchValue(e.target.value);
+    try {
+      const { items } = await Api().post.search({ title: e.target.value });
+      setPosts(items);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Paper classes={{ root: styles.root }}>
@@ -50,7 +73,27 @@ const Header: React.FC = () => {
       <div className={styles.searchBlock}>
         <div className={styles.input}>
           <SearchIcon />
-          <input type="text" placeholder="Поиск" />
+          <input
+            value={searchValue}
+            type="text"
+            placeholder="Поиск"
+            onChange={handleChangeInput}
+          />
+          {posts.length > 0 && (
+            <Paper className={styles.searchPopup}>
+              <List>
+                {posts.map((post) => (
+                  <Link href={`/news/${post.id}`}>
+                    <a>
+                      <ListItem key={post.id}>
+                        <ListItemButton>{post.title}</ListItemButton>
+                      </ListItem>
+                    </a>
+                  </Link>
+                ))}
+              </List>
+            </Paper>
+          )}
         </div>
         <div>
           <Link href="/write">

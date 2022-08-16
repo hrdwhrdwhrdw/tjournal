@@ -1,18 +1,18 @@
 import styles from "./CommentItem.module.scss";
 import { Avatar } from "@mui/material";
-import Link from 'next/link';
-import { OutputData } from '@editorjs/editorjs';
+import Link from "next/link";
+import { OutputData } from "@editorjs/editorjs";
+import { ResponseUser } from "../../utils/api/types";
 
-export type ResponseUser = {
-  fullName: string;
-  avatar: string;
-  id: number
-};
+// export type ResponseUser = {
+//   fullName: string;
+//   id: number;
+// };
 
 export type PostItem = {
-  body: OutputData['blocks'];
+  body: OutputData["blocks"];
   title: string;
-  id: number
+  id: number;
 };
 interface CommentItemProps {
   user: ResponseUser;
@@ -28,21 +28,18 @@ export const CommentItem: React.FC<CommentItemProps> = ({
   return (
     <div className={styles.commentItem}>
       <div className={styles.userInfo}>
-        <Avatar
-          style={{ marginRight: 10 }}
-          src="https://leonardo.osnova.io/f0a508c7-b6df-5e3a-9108-cbbbd4bf3cd6/-/scale_crop/64x64/-/format/webp/"
-        />
+        <Avatar style={{ marginRight: 10 }}>{user.fullName[0]}</Avatar>
         <Link href={`/user/${user.id}`}>
-        <a>
-          <b>{user.fullName}</b>
-        </a>
+          <a>
+            <b>{user.fullName}</b>
+          </a>
         </Link>
       </div>
       <p className={styles.text}>{text}</p>
       <Link href={`/news/${post.id}`}>
-      <a>
-        <span className={styles.postTitle}>{post.title}</span>
-      </a>
+        <a>
+          <span className={styles.postTitle}>{post.title}</span>
+        </a>
       </Link>
     </div>
   );

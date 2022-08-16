@@ -5,16 +5,18 @@ import { Repository } from 'typeorm';
 export declare class CommentService {
     private repository;
     constructor(repository: Repository<CommentEntity>);
-    create(dto: CreateCommentDto): Promise<{
-        text: string;
+    create(dto: CreateCommentDto, userId: number): Promise<CommentEntity>;
+    findAll(postId: number): Promise<{
         post: {
             id: number;
+            title: string;
         };
-        user: {
-            id: number;
-        };
-    } & CommentEntity>;
-    findAll(): Promise<CommentEntity[]>;
+        id: number;
+        text: string;
+        user: import("../user/entities/user.entity").UserEntity;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
     findOne(id: number): Promise<CommentEntity>;
     update(id: number, dto: UpdateCommentDto): Promise<import("typeorm").UpdateResult>;
     remove(id: number): Promise<import("typeorm").DeleteResult>;

@@ -16,6 +16,7 @@ export declare class AuthService {
         id: number;
         fullName: string;
         email: string;
+        comments: import("../comment/entities/comment.entity").CommentEntity[];
         password?: string;
         createdAt: Date;
         updatedAt: Date;
@@ -26,6 +27,7 @@ export declare class AuthService {
         email: string;
         password?: string;
         id: number;
+        comments: import("../comment/entities/comment.entity").CommentEntity[];
         createdAt: Date;
         updatedAt: Date;
     }>;

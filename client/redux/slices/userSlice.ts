@@ -27,7 +27,7 @@ export const userSlice = createSlice({
         ...action.payload.user
       }
     },
-  },
+  },  
 });
 
 export const { setUserData } = userSlice.actions;

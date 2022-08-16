@@ -24,14 +24,14 @@ __decorate([
     __metadata("design:type", String)
 ], CommentEntity.prototype, "text", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, { nullable: false }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, { nullable: true, eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'userId' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], CommentEntity.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => post_entity_1.PostEntity, { nullable: false }),
+    (0, typeorm_1.ManyToOne)(() => post_entity_1.PostEntity, { nullable: true, eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'postId' }),
-    __metadata("design:type", user_entity_1.UserEntity)
+    __metadata("design:type", post_entity_1.PostEntity)
 ], CommentEntity.prototype, "post", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp' }),

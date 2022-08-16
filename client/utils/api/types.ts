@@ -15,6 +15,7 @@ export type ResponseUser = {
   createdAt: string;
   updatedAt: string;
   token: string;
+  commentsCount: number;
 };
 
 export type PostItem = {
@@ -28,3 +29,19 @@ export type PostItem = {
   updatedAt: string;
   views: number;
 };
+
+export type CommentItem = {
+  userData: any;
+  text: string;
+  post: PostItem;
+  id: number;
+  user: ResponseUser;
+  createdAt: string;
+};
+
+export type SearchPostDto = {
+  title?: string;
+  body?: string;
+  limit?: number;
+  take?: number;
+}

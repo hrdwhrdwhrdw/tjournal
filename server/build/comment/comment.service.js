@@ -21,15 +21,31 @@ let CommentService = class CommentService {
     constructor(repository) {
         this.repository = repository;
     }
-    create(dto) {
-        return this.repository.save({
+    async create(dto, userId) {
+        const comment = await this.repository.save({
             text: dto.text,
             post: { id: dto.postId },
-            user: { id: 2 },
+            user: { id: userId },
+        });
+        return this.repository.findOne({
+            where: {
+                id: comment.id,
+            },
+            relations: ['user'],
         });
     }
-    findAll() {
-        return this.repository.find();
+    async findAll(postId) {
+        const qb = this.repository.createQueryBuilder('c');
+        if (postId) {
+            qb.where('c.postId = :postId', { postId });
+        }
+        const res = await qb
+            .leftJoinAndSelect('c.user', 'user')
+            .leftJoinAndSelect('c.post', 'post')
+            .getMany();
+        return res.map((obj) => {
+            return Object.assign(Object.assign({}, obj), { post: { id: obj.post.id, title: obj.post.title } });
+        });
     }
     findOne(id) {
         return this.repository.findOne({

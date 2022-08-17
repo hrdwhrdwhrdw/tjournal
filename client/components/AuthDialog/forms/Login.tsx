@@ -10,7 +10,7 @@ import { setCookie } from "nookies";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 import { useAppDispatch } from '../../../hooks/hooks';
-import { setUserData } from "../../../redux/slices/userSlice";
+import { setUserData } from "../../../redux/users/userSlice";
 import { Api } from '../../../utils/api/index';
 
 interface LoginFormTypes {

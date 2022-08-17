@@ -19,10 +19,10 @@ import AuthDialog from "../AuthDialog/AuthDialog";
 import styles from "./Header.module.scss";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { useAppSelector } from "../../hooks/hooks";
-import { selectUserData } from "../../redux/slices/userSlice";
 import { useState } from "react";
 import { PostItem } from "../CommentItem.tsx/index";
 import { Api } from "../../utils/api/index";
+import { selectUserData } from '../../redux/users/userSlice';
 
 const Header: React.FC = () => {
   const userData = useAppSelector(selectUserData);

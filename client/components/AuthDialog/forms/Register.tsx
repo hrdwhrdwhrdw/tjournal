@@ -9,7 +9,7 @@ import { CreateUserDto } from "../../../utils/api/types";
 import { RegisterFormSchema } from "../../../utils/schemas/validation";
 import FormField from "../../FormField";
 import { useAppDispatch } from "../../../hooks/hooks";
-import { setUserData } from "../../../redux/slices/userSlice";
+import { setUserData } from "../../../redux/users/userSlice";
 import { Api } from "../../../utils/api/index";
 
 interface RegisterFormFormTypes {

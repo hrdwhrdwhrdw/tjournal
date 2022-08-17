@@ -1,10 +1,9 @@
-import { MainLayout } from "../../layouts/MainLayout";
+import { GetServerSideProps, NextPage } from "next";
+import { PostItem } from '../../components/CommentItem.tsx/index';
 import FullPost from "../../components/FullPost/index";
 import PostComments from "../../components/PostComments";
-import data from "../../data";
-import { GetServerSideProps, NextPage } from "next";
+import { MainLayout } from "../../layouts/MainLayout";
 import { Api } from '../../utils/api/index';
-import { PostItem } from '../../components/CommentItem.tsx/index';
 
 interface PostPageProps {
   post: PostItem

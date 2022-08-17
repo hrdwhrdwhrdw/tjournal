@@ -6,10 +6,11 @@ import Comment from "../../components/Comment";
 import { useAppSelector } from "../../hooks/hooks";
 import useComments from "../../hooks/useComments";
 import styles from "../../pages/news/Slug.module.scss";
-import { selectUserData } from "../../redux/slices/userSlice";
+import { selectUserData } from "../../redux/users/userSlice";
 import { Api } from "../../utils/api";
-import { CommentItem, ResponseUser } from "../../utils/api/types";
+import { CommentItem } from "../../utils/api/types";
 import AddCommentForm from "../AddCommentForm";
+import Skeleton from "../Skeleton";
 
 interface PostCommentsType {
   postId: number;
@@ -19,18 +20,19 @@ const PostComments: React.FC<PostCommentsType> = ({ postId }) => {
   const userData = useAppSelector(selectUserData);
   const [isPopup, setIsPopup] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const {comments, setComments} = useComments(postId);
+  const { comments, setComments } = useComments();
+  // const { comments, setComments } = useComments(postId);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const comments = await Api().comment.getAll(postId);
-        setComments(comments);
-      } catch (error) {
-        console.log("get comments", error);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const comments = await Api().comment.getAll(postId);
+  //       setComments(comments);
+  //     } catch (error) {
+  //       console.log("get comments", error);
+  //     }
+  //   })();
+  // }, []);
 
   const onSuccessAddComment = (obj: CommentItem) => {
     setComments((prev: CommentItem[]) => [...prev, obj]);

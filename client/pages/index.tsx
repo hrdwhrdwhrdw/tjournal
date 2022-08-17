@@ -1,17 +1,17 @@
+import { NextPage } from "next";
 import Post from "../components/Post/index";
 import { MainLayout } from "../layouts/MainLayout";
-import { Api } from "../utils/api/index";
-import { NextPage } from "next";
-import { PostItem } from "../utils/api/types";
+import { fetchAllPosts } from "../redux/posts/asyncThunk";
+import { PostItem } from "../redux/posts/types";
 
-interface HomeProps {
+interface HomeTypes {
   posts: PostItem[];
 }
 
-export const Home: NextPage<HomeProps> = ({ posts }) => {
+export const Home: NextPage<HomeTypes> = ({ posts }) => {
   return (
     <MainLayout>
-      {posts && posts.map((post) => (
+      {posts?.map((post) => (
         <Post
           key={post.id}
           id={post.id}
@@ -23,21 +23,14 @@ export const Home: NextPage<HomeProps> = ({ posts }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+Home.getInitialProps = async ({ store }) => {
   try {
-    const posts = await Api().post.getAll();
-    return {
-      props: {
-        posts,
-      },
-    };
-  } catch (e) {
-    console.log(e);
+    await store.dispatch(fetchAllPosts());
+  } catch (error) {
+    console.log(error);
   }
   return {
-    props: {
-      posts: null,
-    },
+    posts: store.getState().posts.posts,
   };
 };
 

@@ -1,10 +1,12 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import userReducer  from "./slices/userSlice";
+import userReducer  from "./users/userSlice";
+import postReducer  from "./posts/postSlice";
 import { createWrapper } from "next-redux-wrapper";
 
 export const makeStore = () => configureStore({
   reducer: {
     user: userReducer,
+    posts: postReducer
   },
 });
 

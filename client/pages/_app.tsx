@@ -1,19 +1,16 @@
-import Head from "next/head";
-import { AppProps } from "next/app";
-import { Provider } from "react-redux";
-import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
+import { CssBaseline } from "@mui/material";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import NextNProgress from "nextjs-progressbar";
 
 import Header from "../components/Header/index";
+import { wrapper } from "../redux/store";
 import { theme } from "../theme";
-import { store, wrapper } from "../redux/store";
 
-import "../styles/globals.scss";
 import "macro-css";
-import { parseCookies } from "nookies";
-import { UserApi } from "../utils/api/user";
-import { setUserData } from "../redux/slices/userSlice";
-import { Api } from "../utils/api";
+import { fetchUserData } from "../redux/users/asyncThunk";
+import "../styles/globals.scss";
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -35,6 +32,13 @@ function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Header />
+        <NextNProgress
+          color="#29D"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={6}
+          showOnShallow={true}
+        />
         <Component {...pageProps} />
       </ThemeProvider>
     </>
@@ -45,8 +49,7 @@ App.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
       try {
-        const userData = await Api(ctx).user.getMe();
-        store.dispatch(setUserData(userData));
+        store.dispatch(fetchUserData(ctx));
       } catch (error) {
         if (ctx.asPath === "/write") {
           ctx.res?.writeHead(302, {

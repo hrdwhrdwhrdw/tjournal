@@ -9,8 +9,9 @@ import { wrapper } from "../redux/store";
 import { theme } from "../theme";
 
 import "macro-css";
-import { fetchUserData } from "../redux/users/asyncThunk";
 import "../styles/globals.scss";
+import { setUserData } from "../redux/users/userSlice";
+import { Api } from "../utils/api";
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -49,7 +50,8 @@ App.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
       try {
-        store.dispatch(fetchUserData(ctx));
+        const userData = await Api(ctx).user.getMe();
+        store.dispatch(setUserData(userData));
       } catch (error) {
         if (ctx.asPath === "/write") {
           ctx.res?.writeHead(302, {

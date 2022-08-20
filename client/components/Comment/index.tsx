@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import {
   Typography,
   Button,
@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import styles from "./Comment.module.scss";
-import { ResponseUser } from "../../utils/api/types";
 import { Api } from "../../utils/api";
+import { ResponseUser } from "../../redux/users/types";
 
 type CommentPostProps = {
   user: ResponseUser;
@@ -18,7 +18,8 @@ type CommentPostProps = {
   createdAt: string;
   currentUserId?: number;
   id: number;
-  onRemoveItem:(id: number) => void;
+  onRemoveItem: (id: number) => void;
+  onCommentEdit: (id: number, text: string) => void;
 };
 
 const Comment: React.FC<CommentPostProps> = ({
@@ -27,12 +28,18 @@ const Comment: React.FC<CommentPostProps> = ({
   text,
   createdAt,
   currentUserId,
-  onRemoveItem
+  onRemoveItem,
+  onCommentEdit,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleClickEdit = () => {
+    onCommentEdit(id, text);
+    setAnchorEl(null)
   };
 
   const handleClose = () => {
@@ -42,7 +49,7 @@ const Comment: React.FC<CommentPostProps> = ({
   const handleClickRemove = async () => {
     try {
       await Api().comment.remove(id);
-      onRemoveItem(id)
+      onRemoveItem(id);
     } catch (error) {
       console.log(error);
     } finally {
@@ -80,7 +87,7 @@ const Comment: React.FC<CommentPostProps> = ({
             onClose={handleClose}
           >
             <MenuItem onClick={handleClickRemove}>Удалить</MenuItem>
-            <MenuItem onClick={handleClose}>Редактировать</MenuItem>
+            <MenuItem onClick={handleClickEdit}>Редактировать</MenuItem>
           </Menu>
         </>
       )}

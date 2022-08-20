@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { CommentItem } from "./types";
+import { UpdateCommentDto } from '../../../server/src/comment/dto/update-comment.dto';
 
 type CreateCommentDto = {
   postId: number;
@@ -26,5 +27,13 @@ export const CommentApi = (instance: AxiosInstance) => ({
 
   async remove(id: number) {
     return instance.delete<CommentItem>("/comments/" + id);
+  },
+
+  async update(id: number, dto: CreateCommentDto) {
+    const { data } = await instance.patch<
+      CreateCommentDto,
+      { data: CommentItem }
+    >(`comments/${id}`, dto);
+    return data;
   },
 });

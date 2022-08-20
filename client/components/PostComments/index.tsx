@@ -1,16 +1,16 @@
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import TuneIcon from "@mui/icons-material/Tune";
 import { Button, Paper, Tab, Tabs, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Comment from "../../components/Comment";
 import { useAppSelector } from "../../hooks/hooks";
 import useComments from "../../hooks/useComments";
 import styles from "../../pages/news/Slug.module.scss";
 import { selectUserData } from "../../redux/users/userSlice";
-import { Api } from "../../utils/api";
 import { CommentItem } from "../../utils/api/types";
 import AddCommentForm from "../AddCommentForm";
-import Skeleton from "../Skeleton";
+import { useEffect } from "react";
+import { Api } from "../../utils/api/index";
 
 interface PostCommentsType {
   postId: number;
@@ -20,26 +20,40 @@ const PostComments: React.FC<PostCommentsType> = ({ postId }) => {
   const userData = useAppSelector(selectUserData);
   const [isPopup, setIsPopup] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const { comments, setComments } = useComments();
-  // const { comments, setComments } = useComments(postId);
+  const { comments, setComments } = useComments(postId);
+  const [editInput, setEditInput] = useState("");
+  const [editId, setEditId] = useState<number>(null);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const comments = await Api().comment.getAll(postId);
-  //       setComments(comments);
-  //     } catch (error) {
-  //       console.log("get comments", error);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const comments = await Api().comment.getAll(postId);
+        setComments(comments);
+      } catch (error) {
+        console.log("get comments", error);
+      }
+    })();
+  }, []);
 
   const onSuccessAddComment = (obj: CommentItem) => {
     setComments((prev: CommentItem[]) => [...prev, obj]);
   };
 
+  const onSuccessEditComment = (obj: CommentItem) => {
+    setEditId(null);
+    setEditInput("");
+    setComments((prev: CommentItem[]) =>
+      prev.map((item) => (obj.id === item.id ? obj : item))
+    );
+  };
+
   const onRemoveItem = (id: number) => {
     setComments((prev: CommentItem[]) => prev.filter((obj) => obj.id !== id));
+  };
+
+  const onCommentEdit = (id: number, text: string) => {
+    setEditId(id);
+    setEditInput(text);
   };
 
   return (
@@ -76,6 +90,9 @@ const PostComments: React.FC<PostCommentsType> = ({ postId }) => {
           <AddCommentForm
             postId={postId}
             onSuccessAddComment={onSuccessAddComment}
+            onSuccessEditComment={onSuccessEditComment}
+            editId={editId}
+            editInput={editInput}
           />
         )}
         <Tabs
@@ -98,6 +115,7 @@ const PostComments: React.FC<PostCommentsType> = ({ postId }) => {
               currentUserId={userData?.id}
               id={obj.id}
               onRemoveItem={onRemoveItem}
+              onCommentEdit={onCommentEdit}
             />
           ))}
         </div>

@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
-import { CreateUserDto, LoginDto, ResponseUser } from "./types";
+import { ResponseUser } from "../../redux/users/types";
+import { CreateUserDto, LoginDto } from "./types";
 
 export const UserApi = (instance: AxiosInstance) => ({
   async register(dto: CreateUserDto) {

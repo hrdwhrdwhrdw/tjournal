@@ -2,12 +2,7 @@ import styles from "./CommentItem.module.scss";
 import { Avatar } from "@mui/material";
 import Link from "next/link";
 import { OutputData } from "@editorjs/editorjs";
-import { ResponseUser } from "../../utils/api/types";
-
-// export type ResponseUser = {
-//   fullName: string;
-//   id: number;
-// };
+import { ResponseUser } from "../../redux/users/types";
 
 export type PostItem = {
   body: OutputData["blocks"];

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentEntity } from './entities/comment.entity';
@@ -18,6 +18,7 @@ export class CommentService {
       post: { id: dto.postId },
       user: { id: userId },
     });
+
     return this.repository.findOne({
       where: {
         id: comment.id,
@@ -51,8 +52,27 @@ export class CommentService {
     });
   }
 
-  update(id: number, dto: UpdateCommentDto) {
-    return this.repository.update(id, dto);
+  async update(id: number, dto: UpdateCommentDto) {
+    const find = await this.repository.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (!find) {
+      throw new NotFoundException('Произошла ошибка при редактировании');
+    }
+
+    await this.repository.update(id, {
+      text: dto.text,
+      post: { id: dto.postId },
+    });
+
+    return this.repository.findOne({
+      where: {
+        id: id,
+      },
+      relations: ['user'],
+    });
   }
 
   remove(id: number) {

@@ -54,8 +54,25 @@ let CommentService = class CommentService {
             },
         });
     }
-    update(id, dto) {
-        return this.repository.update(id, dto);
+    async update(id, dto) {
+        const find = await this.repository.findOne({
+            where: {
+                id: id,
+            },
+        });
+        if (!find) {
+            throw new common_1.NotFoundException('Произошла ошибка при редактировании');
+        }
+        await this.repository.update(id, {
+            text: dto.text,
+            post: { id: dto.postId },
+        });
+        return this.repository.findOne({
+            where: {
+                id: id,
+            },
+            relations: ['user'],
+        });
     }
     remove(id) {
         return this.repository.delete(id);

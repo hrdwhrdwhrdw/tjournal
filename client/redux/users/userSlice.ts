@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { HYDRATE } from "next-redux-wrapper";
-import { fetchUserData } from "./asyncThunk";
 import { ResponseUser } from "./types";
 
 interface UserState {
@@ -23,16 +22,10 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(HYDRATE, (state, action: any) => {
-      state.data = action.payload.user;
-    });
-    builder.addCase(fetchUserData.pending, (state) => {
-      state.data = null;
-    });
-    builder.addCase(fetchUserData.fulfilled, (state, action) => {
-      state.data = action.payload;
-    });
-    builder.addCase(fetchUserData.rejected, (state) => {
-      state.data = null;
+      return {
+        ...state,
+        ...action.payload.user,
+      };
     });
   },
 });

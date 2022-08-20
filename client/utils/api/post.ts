@@ -1,6 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import { AxiosInstance } from "axios";
-import { PostItem, SearchPostDto } from "./types";
+import { PostItem } from "../../redux/posts/types";
+import { SearchPostDto } from "./types";
 
 type CreatePostDto = {
   title: string;

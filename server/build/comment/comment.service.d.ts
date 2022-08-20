@@ -18,6 +18,6 @@ export declare class CommentService {
         updatedAt: Date;
     }[]>;
     findOne(id: number): Promise<CommentEntity>;
-    update(id: number, dto: UpdateCommentDto): Promise<import("typeorm").UpdateResult>;
+    update(id: number, dto: UpdateCommentDto): Promise<CommentEntity>;
     remove(id: number): Promise<import("typeorm").DeleteResult>;
 }

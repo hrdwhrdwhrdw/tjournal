@@ -19,6 +19,6 @@ export declare class CommentController {
         updatedAt: Date;
     }[]>;
     findOne(id: string): Promise<import("./entities/comment.entity").CommentEntity>;
-    update(id: string, updateCommentDto: UpdateCommentDto): Promise<import("typeorm").UpdateResult>;
+    update(id: string, updateCommentDto: UpdateCommentDto): Promise<import("./entities/comment.entity").CommentEntity>;
     remove(id: string): Promise<import("typeorm").DeleteResult>;
 }

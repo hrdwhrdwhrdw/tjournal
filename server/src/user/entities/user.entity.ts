@@ -19,6 +19,9 @@ export class UserEntity {
   @Column({ unique: true })
   email: string;
 
+  @Column({ nullable: true })
+  imageUrl: string;
+
   @OneToMany(() => CommentEntity, (comment) => comment.user, {
     eager: false,
     nullable: true,

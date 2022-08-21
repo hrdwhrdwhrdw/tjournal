@@ -24,7 +24,6 @@ const AddCommentForm: React.FC<AddCommentFormTypes> = ({
   const [isClicked, setIsClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState<string>("");
-  // const [editId, setEditId] = useState<number>(null);
 
   useEffect(() => {
     if (editInput) {

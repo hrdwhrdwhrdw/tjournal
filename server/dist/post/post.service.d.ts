@@ -6,11 +6,14 @@ import { SearchPostDto } from './dto/search-post.dto';
 export declare class PostService {
     private repository;
     constructor(repository: Repository<PostEntity>);
-    create(dto: CreatePostDto): Promise<{
+    create(dto: CreatePostDto, userId: number): Promise<{
         title: string;
         body: import("./dto/create-post.dto").OutputBlockData[];
         tags: string;
         description: any;
+        user: {
+            id: number;
+        };
     } & PostEntity>;
     findAll(): Promise<PostEntity[]>;
     popular(): Promise<{
@@ -22,6 +25,6 @@ export declare class PostService {
         total: number;
     }>;
     findOne(id: number): Promise<PostEntity>;
-    update(id: number, dto: UpdatePostDto): Promise<import("typeorm").UpdateResult>;
-    remove(id: number): Promise<import("typeorm").DeleteResult>;
+    update(id: number, dto: UpdatePostDto, userId: number): Promise<import("typeorm").UpdateResult>;
+    remove(id: number, userId: number): Promise<import("typeorm").DeleteResult>;
 }

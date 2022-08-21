@@ -57,6 +57,23 @@ export class UserService {
     return this.repository.update(id, dto);
   }
 
+  async upload(id: number, dto: UpdateUserDto, file: Express.Multer.File) {
+    console.log(file.filename);
+
+    await this.repository.update(id, {
+      fullName: dto.fullName,
+      email: dto.email,
+      password: dto.password,
+      imageUrl: file.filename,
+    });
+
+    return this.repository.findOne({
+      where: {
+        id: id,
+      },
+    });
+  }
+
   async search(dto: SearchUserDto) {
     const qb = this.repository.createQueryBuilder('u');
     qb.limit(dto.limit || 0);

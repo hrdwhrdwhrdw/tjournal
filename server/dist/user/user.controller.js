@@ -18,6 +18,10 @@ const update_user_dto_1 = require("./dto/update-user.dto");
 const user_service_1 = require("./user.service");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const search_user_dto_1 = require("./dto/search-user.dto");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
+const path_1 = require("path");
+const rxjs_1 = require("rxjs");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -30,6 +34,10 @@ let UserController = class UserController {
     }
     update(req, updateUserDto) {
         return this.userService.update(+req.user.id, updateUserDto);
+    }
+    upload(req, updateUserDto, file) {
+        console.log(file);
+        return (0, rxjs_1.of)({ imagePath: file.path });
     }
     search(dto) {
         return this.userService.search(dto);
@@ -61,6 +69,28 @@ __decorate([
     __metadata("design:paramtypes", [Object, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "update", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('upload'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
+        storage: (0, multer_1.diskStorage)({
+            destination: './uploads',
+            filename: (req, file, cb) => {
+                const randomName = Array(32)
+                    .fill(null)
+                    .map(() => Math.round(Math.random() * 16).toString(16))
+                    .join('');
+                cb(null, `${randomName}${(0, path_1.extname)(file.originalname)}`);
+            },
+        }),
+    })),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, update_user_dto_1.UpdateUserDto, Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "upload", null);
 __decorate([
     (0, common_1.Get)('search'),
     __param(0, (0, common_1.Query)()),

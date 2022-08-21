@@ -14,4 +14,6 @@ export class CreateUserDto {
 
   @Length(5, 30, { message: 'Пароль должен состоять из более 5 символов' })
   password?: string;
+
+  imageUrl?: string;
 }

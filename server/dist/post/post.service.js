@@ -21,7 +21,7 @@ let PostService = class PostService {
     constructor(repository) {
         this.repository = repository;
     }
-    create(dto) {
+    create(dto, userId) {
         var _a;
         const firstParagraph = (_a = dto.body.find((obj) => obj.type === 'paragraph')) === null || _a === void 0 ? void 0 : _a.data.text;
         return this.repository.save({
@@ -29,6 +29,7 @@ let PostService = class PostService {
             body: dto.body,
             tags: dto.tag,
             description: firstParagraph || '',
+            user: { id: userId },
         });
     }
     findAll() {
@@ -50,6 +51,7 @@ let PostService = class PostService {
     }
     async search(dto) {
         const qb = this.repository.createQueryBuilder('p');
+        qb.leftJoinAndSelect('p.user', 'user');
         qb.limit(dto.limit || 0);
         qb.take(dto.take || 10);
         if (dto.views) {
@@ -77,6 +79,7 @@ let PostService = class PostService {
         await this.repository
             .createQueryBuilder('posts')
             .whereInIds(id)
+            .leftJoinAndSelect('posts.user', 'user')
             .update()
             .set({ views: () => 'views + 1' })
             .execute();
@@ -86,7 +89,7 @@ let PostService = class PostService {
             },
         });
     }
-    async update(id, dto) {
+    async update(id, dto, userId) {
         var _a;
         const find = await this.repository.findOne({
             where: {
@@ -102,9 +105,10 @@ let PostService = class PostService {
             body: dto.body,
             tag: dto.tag,
             description: firstParagraph || '',
+            user: { id: userId },
         });
     }
-    async remove(id) {
+    async remove(id, userId) {
         const find = await this.repository.findOne({
             where: {
                 id: id,
@@ -112,6 +116,9 @@ let PostService = class PostService {
         });
         if (!find) {
             throw new common_1.NotFoundException('Статья не найдена');
+        }
+        if (find.user.id !== userId) {
+            throw new common_1.ForbiddenException('У вас нет доступа к статье');
         }
         return this.repository.delete(id);
     }

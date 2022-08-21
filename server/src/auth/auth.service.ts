@@ -30,7 +30,6 @@ export class AuthService {
 
   async login(user: UserEntity) {
     const { ...userData } = user;
-    // const payload = { email: user.email, sub: user.id };
     return {
       ...userData,
       token: this.generateJwtToken(userData),

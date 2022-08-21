@@ -6,4 +6,5 @@ export type ResponseUser = {
   updatedAt: string;
   token: string;
   commentsCount: number;
+  imageUrl?: string
 };

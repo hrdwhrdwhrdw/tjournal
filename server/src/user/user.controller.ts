@@ -3,15 +3,20 @@ import {
   Controller,
   Get,
   Param,
-  Patch,
-  UseGuards,
-  Request,
+  Post,
   Query,
+  Request,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserService } from './user.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { SearchUserDto } from './dto/search-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
@@ -29,9 +34,28 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('me')
-  update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+req.user.id, updateUserDto);
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination:
+          'C:\\Users\\Альберт\\OneDrive\\Рабочий стол\\TJournal\\tjournal\\client\\public\\static',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    })
+  )
+  upload(
+    @Request() req,
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() file
+  ) {
+    return this.userService.upload(+req.user.id, updateUserDto, file);
   }
 
   @Get('search')

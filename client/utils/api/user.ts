@@ -1,6 +1,7 @@
 import { AxiosInstance } from "axios";
 import { ResponseUser } from "../../redux/users/types";
 import { CreateUserDto, LoginDto } from "./types";
+import { UpdateUserDto } from "../../../server/src/user/dto/update-user.dto";
 
 export const UserApi = (instance: AxiosInstance) => ({
   async register(dto: CreateUserDto) {
@@ -21,6 +22,13 @@ export const UserApi = (instance: AxiosInstance) => ({
 
   async getMe() {
     const { data } = await instance.get<ResponseUser>("/users/me");
+    return data;
+  },
+
+  async upload(file: any) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const { data } = await instance.post("/users/upload", formData);
     return data;
   },
 

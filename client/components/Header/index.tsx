@@ -22,10 +22,10 @@ import { useAppSelector } from "../../hooks/hooks";
 import { useState } from "react";
 import { PostItem } from "../CommentItem.tsx/index";
 import { Api } from "../../utils/api/index";
-import { selectUserData } from '../../redux/users/userSlice';
+import { selectUserData } from "../../redux/users/userSlice";
 
 const Header: React.FC = () => {
-  const userData = useAppSelector(selectUserData);
+  const user = useAppSelector(selectUserData);
   const [authVisible, setAuthVisible] = React.useState(true);
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [searchValue, setSearchValue] = useState("");
@@ -39,10 +39,10 @@ const Header: React.FC = () => {
   };
 
   useEffect(() => {
-    if (authVisible && userData) {
+    if (authVisible && user) {
       setAuthVisible(false);
     }
-  }, [authVisible, userData]);
+  }, [authVisible, user]);
 
   const handleChangeInput = async (e: any) => {
     setSearchValue(e.target.value);
@@ -113,13 +113,13 @@ const Header: React.FC = () => {
         <IconButton>
           <NotificationsIcon />
         </IconButton>
-        {userData ? (
+        {user ? (
           <Link href="/profile/1">
             <a className="d-flex align-center">
               <Avatar
                 className={styles.avatar}
                 alt="Remy Sharp"
-                src="https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/"
+                src={user.imageUrl ? `/static/${user.imageUrl}` : user.fullName[0]}
               />
               <ExpandMoreIcon />
             </a>

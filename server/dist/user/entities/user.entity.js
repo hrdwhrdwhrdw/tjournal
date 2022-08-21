@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = void 0;
+const comment_entity_1 = require("../../comment/entities/comment.entity");
 const typeorm_1 = require("typeorm");
 let UserEntity = class UserEntity {
 };
@@ -25,6 +26,13 @@ __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "email", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => comment_entity_1.CommentEntity, (comment) => comment.user, {
+        eager: false,
+        nullable: true,
+    }),
+    __metadata("design:type", Array)
+], UserEntity.prototype, "comments", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)

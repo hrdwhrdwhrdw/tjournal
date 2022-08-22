@@ -114,13 +114,15 @@ const Header: React.FC = () => {
           <NotificationsIcon />
         </IconButton>
         {user ? (
-          <Link href="/profile/1">
+          <Link href={`/profile/${user.id}`}>
             <a className="d-flex align-center">
               <Avatar
                 className={styles.avatar}
                 alt="Remy Sharp"
-                src={user.imageUrl ? `/static/${user.imageUrl}` : user.fullName[0]}
-              />
+                src={`/static/${user.imageUrl}`}
+              >
+                {user.imageUrl ? null : user.fullName[0]}
+              </Avatar>
               <ExpandMoreIcon />
             </a>
           </Link>

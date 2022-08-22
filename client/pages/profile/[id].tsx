@@ -3,16 +3,24 @@ import {
   TextsmsOutlined as MessageIcon,
 } from "@mui/icons-material";
 import { Avatar, Button, Paper, Tab, Tabs, Typography } from "@mui/material";
+import clsx from "clsx";
+import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { ChangeEvent } from "react";
 import Post from "../../components/Post/index";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { MainLayout } from "../../layouts/MainLayout";
+import { ResponseUser } from "../../redux/users/types";
 import { selectUserData, setUserData } from "../../redux/users/userSlice";
 import { Api } from "../../utils/api/index";
+import { ISOConverter } from "../../utils/ISOConverter";
 import styles from "./Profile.module.scss";
 
-export default function Profile() {
+interface ProfileProps {
+  profile: ResponseUser;
+}
+
+const Profile: NextPage<ProfileProps> = ({ profile }) => {
   const user = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
 
@@ -42,11 +50,15 @@ export default function Profile() {
                 }}
                 alt=""
                 src={
-                  user.imageUrl ? `/static/${user.imageUrl}` : user.fullName[0]
+                  profile?.imageUrl
+                    ? `/static/${profile.imageUrl}`
+                    : profile?.fullName[0]
                 }
               />
               <Button
-                className={styles.button}
+                className={clsx(styles.button, {
+                  [styles.hidden]: user.id !== profile.id,
+                })}
                 variant="contained"
                 style={{ width: 28, height: 24 }}
               >
@@ -68,7 +80,7 @@ export default function Profile() {
               className="mt-10"
               variant="h4"
             >
-              Amon Bower
+              {profile.fullName}
             </Typography>
           </div>
           <div>
@@ -76,11 +88,17 @@ export default function Profile() {
               <Button
                 style={{ height: 42, minWidth: 45, width: 45, marginRight: 10 }}
                 variant="contained"
+                disabled={user.id !== profile.id}
               >
                 <SettingsIcon />
               </Button>
             </Link>
-            <Button style={{ height: 42 }} variant="contained" color="primary">
+            <Button
+              style={{ height: 42 }}
+              variant="contained"
+              color="primary"
+              disabled={user.id === profile.id}
+            >
               <MessageIcon className="mr-10" />
               Написать
             </Button>
@@ -95,8 +113,9 @@ export default function Profile() {
           </Typography>
           <Typography>2 подписчика</Typography>
         </div>
-        <Typography>На проекте с 15 сен 2016</Typography>
-
+        <Typography>
+          На проекте с {ISOConverter.format(profile.createdAt, true)}
+        </Typography>
         <Tabs
           className="mt-20"
           value={0}
@@ -128,4 +147,30 @@ export default function Profile() {
       </div>
     </MainLayout>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const id = ctx?.params?.id;
+    let profile;
+    if (id) {
+      profile = await Api(ctx).user.getOne(+id);
+    }
+    return {
+      props: {
+        profile,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+  return {
+    props: {},
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+};
+
+export default Profile;

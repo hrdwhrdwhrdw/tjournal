@@ -15,7 +15,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
   contentFullWidth,
   hideComments,
-  className,
+  className,  
   hideMenu
 }) => {
   return (

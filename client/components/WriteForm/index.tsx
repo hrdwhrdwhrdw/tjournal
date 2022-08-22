@@ -5,8 +5,8 @@ import dynamic from "next/dynamic";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { Api } from "../../utils/api/index";
-import { PostItem } from "../../utils/api/types";
 import { useRouter } from 'next/router';
+import { PostItem } from "../../redux/posts/types";
 
 const Editor = dynamic(() => import("../Editor").then((m: any) => m.Editor), {
   ssr: false,

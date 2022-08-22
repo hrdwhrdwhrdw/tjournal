@@ -1,19 +1,19 @@
 import { GetServerSideProps, NextPage } from "next";
-import { PostItem } from '../../components/CommentItem.tsx/index';
+import { PostItem } from "../../components/CommentItem.tsx/index";
 import FullPost from "../../components/FullPost/index";
 import PostComments from "../../components/PostComments";
 import { MainLayout } from "../../layouts/MainLayout";
-import { Api } from '../../utils/api/index';
+import { Api } from "../../utils/api/index";
 
 interface PostPageProps {
-  post: PostItem
+  post: PostItem;
 }
 
-const PostPage: NextPage<PostPageProps> = ({post}) => {
+const PostPage: NextPage<PostPageProps> = ({ post }) => {
   return (
     <MainLayout contentFullWidth className="mb-50">
-      <FullPost title={post.title} blocks={post.body}/>
-      <PostComments postId={post.id}/>
+      <FullPost title={post.title} blocks={post.body} />
+      <PostComments postId={post.id} />
     </MainLayout>
   );
 };

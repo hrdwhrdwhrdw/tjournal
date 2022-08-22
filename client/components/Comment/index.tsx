@@ -1,16 +1,17 @@
-import React, { MouseEventHandler } from "react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {
-  Typography,
+  Avatar,
   Button,
   IconButton,
   Menu,
   MenuItem,
-  Avatar,
+  Typography,
 } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import styles from "./Comment.module.scss";
-import { Api } from "../../utils/api";
+import Link from "next/link";
+import React from "react";
 import { ResponseUser } from "../../redux/users/types";
+import { Api } from "../../utils/api";
+import styles from "./Comment.module.scss";
 
 type CommentPostProps = {
   user: ResponseUser;
@@ -39,7 +40,7 @@ const Comment: React.FC<CommentPostProps> = ({
 
   const handleClickEdit = () => {
     onCommentEdit(id, text);
-    setAnchorEl(null)
+    setAnchorEl(null);
   };
 
   const handleClose = () => {
@@ -60,7 +61,13 @@ const Comment: React.FC<CommentPostProps> = ({
   return (
     <div className={styles.comment}>
       <div className={styles.userInfo}>
-        <Avatar className="mr-10">{user.fullName[0]}</Avatar>
+        <Link href={`/profile/${user.id}`}>
+          <a>
+            <Avatar className="mr-10" src={`/static/${user.imageUrl}`}>
+              {user.imageUrl ? null : user.fullName[0]}
+            </Avatar>
+          </a>
+        </Link>
         <div className="d-flex flex-column">
           <b>{user.fullName}</b>
           <span>{createdAt}</span>

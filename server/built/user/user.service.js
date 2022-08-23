@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const comment_entity_1 = require("../comment/entities/comment.entity");
+const post_entity_1 = require("../post/entities/post.entity");
 let UserService = class UserService {
     constructor(repository) {
         this.repository = repository;
@@ -36,12 +37,16 @@ let UserService = class UserService {
             return obj;
         });
     }
-    findById(id) {
-        return this.repository.findOne({
-            where: {
-                id: id,
-            },
-        });
+    async findById(id) {
+        return await this.repository
+            .createQueryBuilder('u')
+            .leftJoinAndMapMany('u.comments', comment_entity_1.CommentEntity, 'comment', `comment.userId = u.id`)
+            .loadRelationCountAndMap('u.commentsCount', 'u.comments', 'comments')
+            .leftJoinAndMapMany('u.posts', post_entity_1.PostEntity, 'post', `post.userId = u.id`)
+            .loadRelationCountAndMap('u.postsCount', 'u.posts', 'posts')
+            .where('post.userId = :id', { id })
+            .where('comment.userId = :id', { id })
+            .getOne();
     }
     findByCond(cond) {
         return this.repository.findOne({
@@ -55,7 +60,6 @@ let UserService = class UserService {
         return this.repository.update(id, dto);
     }
     async upload(id, dto, file) {
-        console.log(file.filename);
         await this.repository.update(id, {
             fullName: dto.fullName,
             email: dto.email,

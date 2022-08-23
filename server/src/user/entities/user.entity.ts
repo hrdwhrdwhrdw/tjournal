@@ -1,4 +1,5 @@
 import { CommentEntity } from '../../comment/entities/comment.entity';
+import { PostEntity } from '../../post/entities/post.entity';
 import {
   Entity,
   Column,
@@ -27,6 +28,12 @@ export class UserEntity {
     nullable: true,
   })
   comments: CommentEntity[];
+
+  @OneToMany(() => PostEntity, (post) => post.user, {
+    eager: false,
+    nullable: true,
+  })
+  posts: PostEntity[];
 
   @Column({ nullable: true })
   password?: string;

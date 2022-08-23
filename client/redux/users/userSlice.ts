@@ -6,7 +6,6 @@ import { ResponseUser } from "./types";
 
 interface UserState {
   data: ResponseUser | null;
-  
 }
 
 const initialState: UserState = {

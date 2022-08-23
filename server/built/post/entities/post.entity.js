@@ -32,8 +32,10 @@ __decorate([
 ], PostEntity.prototype, "description", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, {
+        nullable: true,
         eager: true,
     }),
+    (0, typeorm_1.JoinColumn)({ name: 'userId' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], PostEntity.prototype, "user", void 0);
 __decorate([

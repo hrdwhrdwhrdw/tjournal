@@ -10,7 +10,7 @@ export declare class UserService {
     constructor(repository: Repository<UserEntity>);
     create(dto: CreateUserDto): Promise<CreateUserDto & UserEntity>;
     findAll(): Promise<UserEntity[]>;
-    findById(id: number): Promise<UserEntity>;
+    findById(id: any): Promise<UserEntity>;
     findByCond(cond: LoginUserDto): Promise<UserEntity>;
     update(id: number, dto: UpdateUserDto): Promise<import("typeorm").UpdateResult>;
     upload(id: number, dto: UpdateUserDto, file: Express.Multer.File): Promise<UserEntity>;

@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -24,8 +25,10 @@ export class PostEntity {
   description: string;
 
   @ManyToOne(() => UserEntity, {
+    nullable: true,
     eager: true,
   })
+  @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
   @Column({

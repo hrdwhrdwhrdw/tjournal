@@ -6,7 +6,8 @@ import { Avatar, Button, Paper, Tab, Tabs, Typography } from "@mui/material";
 import clsx from "clsx";
 import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
-import { ChangeEvent } from "react";
+import { useRouter } from "next/router";
+import { ChangeEvent, useEffect, useState } from "react";
 import Post from "../../components/Post/index";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { MainLayout } from "../../layouts/MainLayout";
@@ -23,12 +24,14 @@ interface ProfileProps {
 const Profile: NextPage<ProfileProps> = ({ profile }) => {
   const user = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
       const file = e.target.files[0];
       const data = await Api().user.upload(file);
       dispatch(setUserData(data));
+      router.replace(router.asPath);
     } catch (error) {
       console.log(error);
     }
@@ -39,18 +42,12 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
       <Paper className="pl-20 pr-20 pt-20 mb-30" elevation={0}>
         <div className="d-flex justify-between">
           <div>
-            <div className={styles.image}>
+            <div className={styles.imageWrapper}>
               <img
-                style={{
-                  width: 120,
-                  height: 120,
-                  borderRadius: 8,
-                  cursor: "zoom-in",
-                  position: "absolute",
-                }}
-                alt=""
+                className={styles.image}
+                alt="avatar"
                 src={
-                  profile?.imageUrl
+                  profile.imageUrl
                     ? `/static/${profile.imageUrl}`
                     : profile?.fullName[0]
                 }
@@ -94,7 +91,7 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
               </Button>
             </Link>
             <Button
-              style={{ height: 42 }}
+              style={{ height: 42, backgroundColor: "#4683d9", color: "#fff" }}
               variant="contained"
               color="primary"
               disabled={user.id === profile.id}
@@ -109,7 +106,11 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
             style={{ fontWeight: "bold", color: "#35AB66" }}
             className="mr-15"
           >
-            +208
+            {user.commentsCount > 0 ? (
+              <span>+{user.commentsCount * 2 + user.postsCount * 3}</span>
+            ) : (
+              "0"
+            )}
           </Typography>
           <Typography>2 подписчика</Typography>
         </div>
@@ -124,7 +125,9 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
         >
           <Tab label="Статьи" />
           <Tab label="Комментарии" />
-          <Tab label="Закладки" />
+          <Tab label="Черновики" />
+          <Tab label="Донаты" />
+          <Tab label="Подробнее" />
         </Tabs>
       </Paper>
       <div className="d-flex align-start">

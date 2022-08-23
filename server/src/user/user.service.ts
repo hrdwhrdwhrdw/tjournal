@@ -7,6 +7,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { SearchUserDto } from './dto/search-user.dto';
 import { CommentEntity } from '../comment/entities/comment.entity';
+import { PostEntity } from '../post/entities/post.entity';
 
 @Injectable()
 export class UserService {
@@ -36,12 +37,21 @@ export class UserService {
     });
   }
 
-  findById(id: number) {
-    return this.repository.findOne({
-      where: {
-        id: id,
-      },
-    });
+  async findById(id) {
+    return await this.repository
+      .createQueryBuilder('u')
+      .leftJoinAndMapMany(
+        'u.comments',
+        CommentEntity,
+        'comment',
+        `comment.userId = u.id`
+      )
+      .loadRelationCountAndMap('u.commentsCount', 'u.comments', 'comments')
+      .leftJoinAndMapMany('u.posts', PostEntity, 'post', `post.userId = u.id`)
+      .loadRelationCountAndMap('u.postsCount', 'u.posts', 'posts')
+      .where('post.userId = :id', { id })
+      .where('comment.userId = :id', { id })
+      .getOne();
   }
 
   findByCond(cond: LoginUserDto) {
@@ -58,8 +68,6 @@ export class UserService {
   }
 
   async upload(id: number, dto: UpdateUserDto, file: Express.Multer.File) {
-    console.log(file.filename);
-
     await this.repository.update(id, {
       fullName: dto.fullName,
       email: dto.email,

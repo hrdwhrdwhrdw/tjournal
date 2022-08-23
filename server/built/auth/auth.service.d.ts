@@ -18,6 +18,7 @@ export declare class AuthService {
         email: string;
         imageUrl: string;
         comments: import("../comment/entities/comment.entity").CommentEntity[];
+        posts: import("../post/entities/post.entity").PostEntity[];
         password?: string;
         createdAt: Date;
         updatedAt: Date;
@@ -30,6 +31,7 @@ export declare class AuthService {
         imageUrl: string;
         id: number;
         comments: import("../comment/entities/comment.entity").CommentEntity[];
+        posts: import("../post/entities/post.entity").PostEntity[];
         createdAt: Date;
         updatedAt: Date;
     }>;

@@ -1,8 +1,8 @@
+import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
+import { SearchPostDto } from './dto/search-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './entities/post.entity';
-import { Repository } from 'typeorm';
-import { SearchPostDto } from './dto/search-post.dto';
 export declare class PostService {
     private repository;
     constructor(repository: Repository<PostEntity>);

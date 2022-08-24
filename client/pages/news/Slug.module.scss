@@ -1,5 +1,15 @@
 .popupWrapper {
   position: relative;
+
+  svg {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+
+    &:nth-child(2) {
+      margin-left: 10px;
+    }
+  }
 }
 
 .popup {
@@ -20,6 +30,6 @@
   button {
     width: 100%;
     border-radius: 0 !important;
-    overflow: hidden !important; 
+    overflow: hidden !important;
   }
 }

@@ -12,6 +12,7 @@ import React from "react";
 import { ResponseUser } from "../../redux/users/types";
 import { Api } from "../../utils/api";
 import styles from "./Comment.module.scss";
+import { timeSince } from "../../utils/timeSince";
 
 type CommentPostProps = {
   user: ResponseUser;
@@ -58,6 +59,8 @@ const Comment: React.FC<CommentPostProps> = ({
     }
   };
 
+  const timeAgo = timeSince(createdAt).split(" ").slice(0, 2).join(" ");
+
   return (
     <div className={styles.comment}>
       <div className={styles.userInfo}>
@@ -70,7 +73,7 @@ const Comment: React.FC<CommentPostProps> = ({
         </Link>
         <div className="d-flex flex-column">
           <b>{user.fullName}</b>
-          <span>{createdAt}</span>
+          <span>{timeAgo}</span>
         </div>
       </div>
       <Typography className={styles.text}>{text}</Typography>

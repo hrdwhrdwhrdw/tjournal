@@ -8,8 +8,14 @@ export type PostItem = {
   body: OutputData["blocks"];
   title: string;
   id: number;
+  views: number;
+  createdAt: Date;
+  updatedAt: Date;
+  description: string;
+  user?: ResponseUser;
 };
-interface CommentItemProps {
+
+export interface CommentItemProps {
   user: ResponseUser;
   text: string;
   post: PostItem;

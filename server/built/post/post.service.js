@@ -15,13 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const post_entity_1 = require("./entities/post.entity");
 const typeorm_2 = require("typeorm");
+const post_entity_1 = require("./entities/post.entity");
 let PostService = class PostService {
     constructor(repository) {
         this.repository = repository;
     }
-    create(dto, userId) {
+    async create(dto, userId) {
         var _a;
         const firstParagraph = (_a = dto.body.find((obj) => obj.type === 'paragraph')) === null || _a === void 0 ? void 0 : _a.data.text;
         return this.repository.save({

@@ -1,14 +1,14 @@
 import {
+  ForbiddenException,
   Injectable,
   NotFoundException,
-  ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
+import { SearchPostDto } from './dto/search-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './entities/post.entity';
-import { Repository } from 'typeorm';
-import { SearchPostDto } from './dto/search-post.dto';
 
 @Injectable()
 export class PostService {
@@ -17,9 +17,10 @@ export class PostService {
     private repository: Repository<PostEntity>
   ) {}
 
-  create(dto: CreatePostDto, userId: number) {
+  async create(dto: CreatePostDto, userId: number) {
     const firstParagraph = dto.body.find((obj) => obj.type === 'paragraph')
       ?.data.text;
+
     return this.repository.save({
       title: dto.title,
       body: dto.body,

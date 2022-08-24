@@ -11,10 +11,15 @@ const styles = {
   justifyContent: "space-between",
 };
 
-const PostActions = () => {
+interface PostActionsType {
+  commentsCount: number;
+}
+
+const PostActions: React.FC<PostActionsType> = ({ commentsCount }) => {
   return (
     <ul style={styles}>
       <li>
+        {commentsCount}
         <IconButton>
           <ChatBubbleOutlineIcon />
         </IconButton>

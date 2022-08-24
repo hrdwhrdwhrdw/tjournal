@@ -4,16 +4,23 @@ import FullPost from "../../components/FullPost/index";
 import PostComments from "../../components/PostComments";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Api } from "../../utils/api/index";
+import useComments from "../../hooks/useComments";
 
 interface PostPageProps {
   post: PostItem;
 }
 
 const PostPage: NextPage<PostPageProps> = ({ post }) => {
+  const { comments, setComments } = useComments(post.id);
+
   return (
     <MainLayout contentFullWidth className="mb-50">
-      <FullPost title={post.title} blocks={post.body} />
-      <PostComments postId={post.id} />
+      <FullPost post={post} comments={comments} />
+      <PostComments
+        postId={post.id}
+        comments={comments}
+        setComments={setComments}
+      />
     </MainLayout>
   );
 };

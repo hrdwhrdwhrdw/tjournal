@@ -1,46 +1,47 @@
-import React from "react";
-import { Button, Paper, Typography } from "@mui/material";
-import styles from "./FullPost.module.scss";
-import PostActions from "../PostActions";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { OutputData } from "@editorjs/editorjs";
+import { Button, Paper, Typography } from "@mui/material";
+import React from "react";
+import { CommentItem } from "../../utils/api/types";
+import { PostItem } from "../CommentItem.tsx/index";
+import PostActions from "../PostActions";
+import PostAuthor from "../PostAuthor";
+import styles from "./FullPost.module.scss";
 
 interface FullPostType {
-  title: string;
-  blocks: OutputData["blocks"];
+  post: PostItem;
+  comments: CommentItem[];
 }
 
-const FullPost: React.FC<FullPostType> = ({ title, blocks }) => {
+const FullPost: React.FC<FullPostType> = ({ post, comments }) => {
   return (
     <Paper className={styles.paper} elevation={0}>
       <div className="container">
         <Typography className={styles.title} variant="h5">
-          {title}
+          {post.title}
         </Typography>
-        {blocks.map((obj) => (
+        {post.body.map((obj) => (
           <Typography
             key={obj.id}
             dangerouslySetInnerHTML={{ __html: obj.data.text }}
           />
         ))}
-        <div style={{ width: 300 }}>
-          <PostActions />
+        <span className={styles.views}>{post.views} просмотров</span>
+        <div className={styles.postActions}>
+          <PostActions commentsCount={comments.length} />
         </div>
         <div className={styles.userInfoWrapper}>
           <div className={styles.userInfo}>
-            <img
-              src="https://leonardo.osnova.io/08bb4cce-7fb7-5817-953e-6183a6734bbe/-/scale_crop/108x108/-/format/webp"
-              alt="avatar"
-            />
-            <b>Родина слонов</b>
-            <span>+635</span>
+            <PostAuthor authorId={post.user.id} />
           </div>
           <div className="df-flex align-center">
             <Button variant="contained" className="mr-10">
               <ChatBubbleOutlineIcon />
             </Button>
-            <Button variant="contained">
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#4683d9", color: "#fff" }}
+            >
               <PersonAddIcon />
               <b className="ml-10">Подписаться</b>
             </Button>

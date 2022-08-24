@@ -9,6 +9,7 @@ interface HomeTypes {
 }
 
 export const Home: NextPage<HomeTypes> = ({ posts }) => {
+  
   return (
     <MainLayout>
       {posts?.map((post) => (

@@ -3,6 +3,7 @@
   top: 80px;
   left: 15px;
   width: 200px;
+
   button {
     width: 100%;
     color: #000;
@@ -12,8 +13,19 @@
     font-weight: 400;
     justify-content: start;
     padding: 10px;
+
+    .active {
+      svg {
+        color: orange;
+      }
+    }
+
     svg {
       margin-right: 10px;
     }
   }
+}
+
+.active {
+  color: #fcae41
 }

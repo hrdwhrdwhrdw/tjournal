@@ -52,28 +52,20 @@ const PostComments: React.FC<PostCommentsType> = ({
         <div className="d-flex justify-between mb-20">
           <Typography variant="h6">{comments.length} комментария</Typography>
           <div className={styles.popupWrapper}>
-            {/* <Button
-              variant="contained"
-              className="mr-20 ml-auto"
-              onClick={() => setIsPopup(!isPopup)}
-            > */}
             <TuneIcon onClick={() => setIsPopup(!isPopup)} />
-            {/* </Button> */}
-            {/* <Button variant="contained"> */}
             <NotificationsNoneIcon />
-            {/* </Button> */}
-            {isPopup ? (
-              <div className={styles.popup}>
+            {isPopup && (
+              <Paper className={styles.popup} elevation={0}>
                 <ul className={styles.popupList}>
                   <li>
-                    <Button variant="contained">Лучшие</Button>
+                    <Button>Лучшие</Button>
                   </li>
                   <li>
-                    <Button variant="contained">Популярные</Button>
+                    <Button>Популярные</Button>
                   </li>
                 </ul>
-              </div>
-            ) : null}
+              </Paper>
+            )}
           </div>
         </div>
         {userData && (
@@ -85,7 +77,16 @@ const PostComments: React.FC<PostCommentsType> = ({
             editInput={editInput}
           />
         )}
-        <div>
+        <div
+          className={`d-flex mt-25 mb-25 ${
+            !comments.length && "justify-center"
+          }`}
+        >
+          {!comments.length && (
+            <span>
+              Пока что здесь нет комментариев, оставьте, пожалуйста, свой
+            </span>
+          )}
           {comments.map((obj) => (
             <Comment
               key={obj.id}

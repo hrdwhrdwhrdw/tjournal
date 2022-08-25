@@ -55,7 +55,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper classes={{ root: styles.root }} elevation={0}>
       <div className="d-flex align-center">
         <IconButton>
           <MenuIcon />

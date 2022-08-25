@@ -16,7 +16,7 @@
 }
 
 .userInfoWrapper {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,7 +51,10 @@
 
 .postActions {
   margin-top: 15px;
-  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 
   svg {
     width: 22px;
@@ -62,7 +65,113 @@
 
 .popupWrapper {
   position: relative;
+
   svg {
     cursor: pointer;
+  }
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+
+
+}
+
+.tagImage {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  span {
+    font-size: 15px;
+    cursor: pointer;
+
+    &:hover {
+      color: #3766a9
+    }
+  }
+
+  svg {
+    cursor: pointer;
+  }
+}
+
+.createTime {
+  margin-left: 28px;
+  margin-right: auto;
+  font-size: 15px;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ratingInner {
+  font-weight: bold;
+  color: #2ea83a;
+  font-size: 14px;
+}
+
+.popupWrapper {
+  position: relative;
+  z-index: 20;
+}
+
+.popup {
+  width: 150px;
+  padding: 6px;
+  position: absolute;
+  bottom: -150%;
+  left: -50%;
+  z-index: 30;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+
+  button {
+    text-transform: capitalize;
+    color: #000;
+    justify-content: flex-start;
+    font-size: 16px;
+    font-weight: normal;
+    border-radius: 6px;
+    padding: 4px 10px;
+
+    &:hover {
+      background-color: #e3edfd;
+    }
+  }
+}
+
+.subscribeButton {
+  background-color: #4683d9 !important;
+  color: #fff !important;
+
+  &:hover {
+    background-color: #2a67bd !important;
   }
 }

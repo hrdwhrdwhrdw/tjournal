@@ -10,6 +10,7 @@ type UseCommentsProps = {
 
 const useComments = (postId?: number): UseCommentsProps => {
   const [comments, setComments] = useState<CommentItem[]>([]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -20,6 +21,7 @@ const useComments = (postId?: number): UseCommentsProps => {
       }
     })();
   }, []);
+  
   return { comments, setComments };
 };
 

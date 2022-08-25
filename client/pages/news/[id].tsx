@@ -12,7 +12,7 @@ interface PostPageProps {
 
 const PostPage: NextPage<PostPageProps> = ({ post }) => {
   const { comments, setComments } = useComments(post.id);
-
+  
   return (
     <MainLayout contentFullWidth className="mb-50">
       <FullPost post={post} comments={comments} />

@@ -13,6 +13,7 @@ export type PostItem = {
   updatedAt: Date;
   description: string;
   user?: ResponseUser;
+  commentsCount?: number;
 };
 
 export interface CommentItemProps {

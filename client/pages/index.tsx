@@ -9,16 +9,10 @@ interface HomeTypes {
 }
 
 export const Home: NextPage<HomeTypes> = ({ posts }) => {
-  
   return (
     <MainLayout>
       {posts?.map((post) => (
-        <Post
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          description={post.description}
-        />
+        <Post post={post} />
       ))}
     </MainLayout>
   );

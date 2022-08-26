@@ -1,11 +1,13 @@
 import { OutputBlockData } from '../../../dist/post/dto/create-post.dto';
 import { UserEntity } from '../../user/entities/user.entity';
+import { CommentEntity } from '../../comment/entities/comment.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -30,6 +32,12 @@ export class PostEntity {
   })
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
+
+  @OneToMany(() => CommentEntity, (comment) => comment.post, {
+    eager: false,
+    nullable: true,
+  })
+  comments: CommentEntity[];
 
   @Column({
     default: 0,

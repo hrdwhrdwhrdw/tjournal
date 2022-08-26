@@ -38,9 +38,6 @@ export class UserEntity {
   @Column({ nullable: true })
   password?: string;
 
-  // @Column({ nullable: true, default: 0 })
-  // rating: number;
-
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

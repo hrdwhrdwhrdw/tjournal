@@ -9,11 +9,11 @@ export enum Status {
 export type PostItem = {
   body: OutputData["blocks"];
   description: string;
-  createdAt: string;
+  createdAt: Date;
   id: number;
   user: ResponseUser;
   tag: string | null;
   title: string;
-  updatedAt: string;
+  updatedAt: Date;
   views: number;
 };

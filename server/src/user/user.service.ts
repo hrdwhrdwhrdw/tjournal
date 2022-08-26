@@ -38,7 +38,7 @@ export class UserService {
   }
 
   async findById(id) {
-    return await this.repository
+    const profile = await this.repository
       .createQueryBuilder('u')
       .leftJoinAndMapMany(
         'u.comments',
@@ -52,6 +52,9 @@ export class UserService {
       .where('post.userId = :id', { id })
       .where('comment.userId = :id', { id })
       .getOne();
+    delete profile.comments;
+    delete profile.posts;
+    return profile;
   }
 
   findByCond(cond: LoginUserDto) {

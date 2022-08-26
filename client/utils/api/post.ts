@@ -14,6 +14,11 @@ export const PostApi = (instance: AxiosInstance) => ({
     return data;
   },
 
+  async getAllById(id: number) {
+    const { data } = await instance.get<PostItem[]>(`/posts/user/${id}`);
+    return data;
+  },
+
   async getOne(id: number) {
     const { data } = await instance.get<PostItem>(`/posts/${id}`);
     return data;

@@ -38,7 +38,7 @@ let UserService = class UserService {
         });
     }
     async findById(id) {
-        return await this.repository
+        const profile = await this.repository
             .createQueryBuilder('u')
             .leftJoinAndMapMany('u.comments', comment_entity_1.CommentEntity, 'comment', `comment.userId = u.id`)
             .loadRelationCountAndMap('u.commentsCount', 'u.comments', 'comments')
@@ -47,6 +47,9 @@ let UserService = class UserService {
             .where('post.userId = :id', { id })
             .where('comment.userId = :id', { id })
             .getOne();
+        delete profile.comments;
+        delete profile.posts;
+        return profile;
     }
     findByCond(cond) {
         return this.repository.findOne({

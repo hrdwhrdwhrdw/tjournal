@@ -20,8 +20,6 @@ interface RatingPropsType {
 }
 
 const Rating: NextPage<RatingPropsType> = ({ users }) => {
-  console.log(users);
-  
   return (
     <MainLayout hideComments>
       <Paper className="pl-20 pt-20 pr-20 mb-20">

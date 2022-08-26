@@ -34,10 +34,10 @@ function App({ Component, pageProps }: AppProps) {
         <CssBaseline />
         <Header />
         <NextNProgress
-          color="#29D"
+          color="#fcae41"
           startPosition={0.3}
           stopDelayMs={200}
-          height={6}
+          height={4}
           showOnShallow={true}
         />
         <Component {...pageProps} />

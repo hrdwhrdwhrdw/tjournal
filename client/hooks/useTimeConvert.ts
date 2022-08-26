@@ -31,19 +31,19 @@ const useTimeConvert = (createdAt: Date) => {
       current.getMonth() === date.getMonth() &&
       current.getDay() === date.getDay()
     ) {
-      str = "сегодня в " + date.getUTCHours() + ":" + date.getUTCMinutes();
+      str = "сегодня в " + date.getHours() + ":" + date.getMinutes();
     } else if (
       current.getFullYear() === date.getFullYear() &&
       current.getMonth() === date.getMonth() &&
       current.getDate() - 1 === date.getDate()
     ) {
-      str = "вчера в " + date.getUTCHours() + ":" + date.getUTCMinutes();
+      str = "вчера в " + date.getHours() + ":" + date.getMinutes();
     } else if (
       current.getFullYear() === date.getFullYear() &&
       current.getMonth() === date.getMonth() &&
       current.getDate() - 2 === date.getDate()
     ) {
-      str = "позавчера в " + date.getUTCHours() + ":" + date.getUTCMinutes();
+      str = "позавчера в " + date.getHours() + ":" + date.getMinutes();
     } else {
       str =
         date.getDate() +
@@ -51,9 +51,9 @@ const useTimeConvert = (createdAt: Date) => {
         month[date.getMonth()] +
         "а " +
         " в " +
-        date.getUTCHours() +
+        date.getHours() +
         ":" +
-        date.getUTCMinutes();
+        date.getMinutes();
     }
     setCreateTime(str);
   };

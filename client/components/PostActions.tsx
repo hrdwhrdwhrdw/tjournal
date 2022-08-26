@@ -6,13 +6,14 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
 
 const styles = {
+  width: "200px",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
 };
 
 interface PostActionsType {
-  commentsCount: number;
+  commentsCount?: number;
 }
 
 const PostActions: React.FC<PostActionsType> = ({ commentsCount }) => {

@@ -17,6 +17,7 @@ export declare class PostController {
     update(userId: number, id: string, updatePostDto: UpdatePostDto): Promise<import("typeorm").UpdateResult>;
     remove(userId: number, id: string): Promise<import("typeorm").DeleteResult>;
     findAll(): Promise<import("./entities/post.entity").PostEntity[]>;
+    findAllById(id: string): Promise<import("./entities/post.entity").PostEntity[]>;
     getPopularPosts(): Promise<{
         items: import("./entities/post.entity").PostEntity[];
         total: number;

@@ -16,6 +16,7 @@ export declare class PostService {
         };
     } & PostEntity>;
     findAll(): Promise<PostEntity[]>;
+    findAllById(id: number): Promise<PostEntity[]>;
     popular(): Promise<{
         items: PostEntity[];
         total: number;

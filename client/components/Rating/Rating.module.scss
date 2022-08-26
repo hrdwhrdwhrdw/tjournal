@@ -1,0 +1,16 @@
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.ratingInner {
+  font-weight: bold;
+  color: #2ea83a;
+  font-size: 14px;
+}

@@ -8,7 +8,7 @@ import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
-import Post from "../../components/Post/index";
+import MyPosts from "../../components/MyPosts";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { MainLayout } from "../../layouts/MainLayout";
 import { ResponseUser } from "../../redux/users/types";
@@ -132,13 +132,7 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
       </Paper>
       <div className="d-flex align-start">
         <div className="mr-20 flex mt-0">
-          {user.posts.map((post) => (
-            <Post
-              id={post.id}
-              title={post.title}
-              description={post.description}
-            />
-          ))}
+          <MyPosts id={profile.id} />
         </div>
         <Paper style={{ width: 300 }} className="p-20 mb-20" elevation={0}>
           <b>Подписчики</b>

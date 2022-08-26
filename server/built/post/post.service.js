@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const post_entity_1 = require("./entities/post.entity");
+const comment_entity_1 = require("../comment/entities/comment.entity");
 let PostService = class PostService {
     constructor(repository) {
         this.repository = repository;
@@ -32,12 +33,34 @@ let PostService = class PostService {
             user: { id: userId },
         });
     }
-    findAll() {
-        return this.repository.find({
-            order: {
-                createdAt: 'DESC',
-            },
+    async findAll() {
+        const arr = await this.repository
+            .createQueryBuilder('p')
+            .leftJoinAndMapMany('p.comments', comment_entity_1.CommentEntity, 'comment', 'comment.postId = p.id')
+            .leftJoinAndSelect('p.user', 'user')
+            .loadRelationCountAndMap('p.commentsCount', 'p.comments', 'comments')
+            .orderBy('p.createdAt', 'DESC')
+            .getMany();
+        arr.map((post) => {
+            delete post.comments;
+            return post;
         });
+        return arr;
+    }
+    async findAllById(id) {
+        const arr = await this.repository
+            .createQueryBuilder('p')
+            .leftJoinAndMapMany('p.comments', comment_entity_1.CommentEntity, 'comment', 'comment.postId = p.id')
+            .leftJoinAndSelect('p.user', 'user')
+            .loadRelationCountAndMap('p.commentsCount', 'p.comments', 'comments')
+            .where('p.user.id = :id', { id })
+            .orderBy('p.createdAt', 'DESC')
+            .getMany();
+        arr.map((post) => {
+            delete post.comments;
+            return post;
+        });
+        return arr;
     }
     async popular() {
         const qb = this.repository.createQueryBuilder();

@@ -47,6 +47,11 @@ export class PostController {
     return this.postService.findAll();
   }
 
+  @Get('user/:id')
+  findAllById(@Param('id') id: string) {
+    return this.postService.findAllById(+id);
+  }
+
   @Get('/popular')
   getPopularPosts() {
     return this.postService.popular();

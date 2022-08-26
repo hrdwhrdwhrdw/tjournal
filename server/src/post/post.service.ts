@@ -9,6 +9,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { SearchPostDto } from './dto/search-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './entities/post.entity';
+import { CommentEntity } from '../comment/entities/comment.entity';
 
 @Injectable()
 export class PostService {
@@ -30,12 +31,45 @@ export class PostService {
     });
   }
 
-  findAll() {
-    return this.repository.find({
-      order: {
-        createdAt: 'DESC',
-      },
+  async findAll() {
+    const arr = await this.repository
+      .createQueryBuilder('p')
+      .leftJoinAndMapMany(
+        'p.comments',
+        CommentEntity,
+        'comment',
+        'comment.postId = p.id'
+      )
+      .leftJoinAndSelect('p.user', 'user')
+      .loadRelationCountAndMap('p.commentsCount', 'p.comments', 'comments')
+      .orderBy('p.createdAt', 'DESC')
+      .getMany();
+    arr.map((post) => {
+      delete post.comments;
+      return post;
     });
+    return arr;
+  }
+
+  async findAllById(id: number) {
+    const arr = await this.repository
+      .createQueryBuilder('p')
+      .leftJoinAndMapMany(
+        'p.comments',
+        CommentEntity,
+        'comment',
+        'comment.postId = p.id'
+      )
+      .leftJoinAndSelect('p.user', 'user')
+      .loadRelationCountAndMap('p.commentsCount', 'p.comments', 'comments')
+      .where('p.user.id = :id', { id })
+      .orderBy('p.createdAt', 'DESC')
+      .getMany();
+    arr.map((post) => {
+      delete post.comments;
+      return post;
+    });
+    return arr;
   }
 
   async popular() {

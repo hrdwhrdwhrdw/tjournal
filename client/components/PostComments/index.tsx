@@ -6,12 +6,12 @@ import Comment from "../../components/Comment";
 import { useAppSelector } from "../../hooks/hooks";
 import styles from "../../pages/news/Slug.module.scss";
 import { selectUserData } from "../../redux/users/userSlice";
-import { CommentItem } from "../../utils/api/types";
+import { CommentItemType } from "../../utils/api/types";
 import AddCommentForm from "../AddCommentForm";
 
 interface PostCommentsType {
-  comments: CommentItem[];
-  setComments: Dispatch<SetStateAction<CommentItem[]>>;
+  comments: CommentItemType[];
+  setComments: Dispatch<SetStateAction<CommentItemType[]>>;
   postId: number;
 }
 
@@ -25,20 +25,20 @@ const PostComments: React.FC<PostCommentsType> = ({
   const [editInput, setEditInput] = useState("");
   const [editId, setEditId] = useState<number>(null);
 
-  const onSuccessAddComment = (obj: CommentItem) => {
-    setComments((prev: CommentItem[]) => [...prev, obj]);
+  const onSuccessAddComment = (obj: CommentItemType) => {
+    setComments((prev: CommentItemType[]) => [...prev, obj]);
   };
 
-  const onSuccessEditComment = (obj: CommentItem) => {
+  const onSuccessEditComment = (obj: CommentItemType) => {
     setEditId(null);
     setEditInput("");
-    setComments((prev: CommentItem[]) =>
+    setComments((prev: CommentItemType[]) =>
       prev.map((item) => (obj.id === item.id ? obj : item))
     );
   };
 
   const onRemoveItem = (id: number) => {
-    setComments((prev: CommentItem[]) => prev.filter((obj) => obj.id !== id));
+    setComments((prev: CommentItemType[]) => prev.filter((obj) => obj.id !== id));
   };
 
   const onCommentEdit = (id: number, text: string) => {
@@ -78,8 +78,8 @@ const PostComments: React.FC<PostCommentsType> = ({
           />
         )}
         <div
-          className={`d-flex mt-25 mb-25 ${
-            !comments.length && "justify-center"
+          className={`d-flex mt-25 mb-25 flex-column ${
+            !comments.length ? "justify-center" : ''
           }`}
         >
           {!comments.length && (
@@ -91,6 +91,7 @@ const PostComments: React.FC<PostCommentsType> = ({
             <Comment
               key={obj.id}
               user={obj.user}
+              userId={userData.id}
               text={obj.text}
               createdAt={obj.createdAt}
               currentUserId={userData?.id}

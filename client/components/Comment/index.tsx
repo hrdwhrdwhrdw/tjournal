@@ -20,13 +20,15 @@ type CommentPostProps = {
   createdAt: string;
   currentUserId?: number;
   id: number;
-  onRemoveItem: (id: number) => void;
-  onCommentEdit: (id: number, text: string) => void;
+  userId: number;
+  onRemoveItem?: (id: number) => void;
+  onCommentEdit?: (id: number, text: string) => void;
 };
 
 const Comment: React.FC<CommentPostProps> = ({
   id,
   user,
+  userId,
   text,
   createdAt,
   currentUserId,
@@ -80,8 +82,7 @@ const Comment: React.FC<CommentPostProps> = ({
       <Button disableRipple className={styles.replyButton}>
         Ответить
       </Button>
-
-      {currentUserId === user.id && (
+      {currentUserId === userId && (
         <>
           <IconButton
             onClick={handleClick}

@@ -7,8 +7,7 @@ import clsx from "clsx";
 import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent } from "react";
-import MyPosts from "../../components/MyPosts";
+import { ChangeEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { MainLayout } from "../../layouts/MainLayout";
 import { ResponseUser } from "../../redux/users/types";
@@ -16,6 +15,11 @@ import { selectUserData, setUserData } from "../../redux/users/userSlice";
 import { Api } from "../../utils/api/index";
 import { ISOConverter } from "../../utils/ISOConverter";
 import styles from "./Profile.module.scss";
+import ProfilePosts from "../../components/ProfilePosts/index";
+import ProfileComments from "../../components/ProfileComments/index";
+import ProfileDrafts from "../../components/ProfileDrafts/index";
+import ProfileDonates from "../../components/ProfileDonates/index";
+import ProfileMore from "../../components/ProfileMore/index";
 
 interface ProfileProps {
   profile: ResponseUser;
@@ -37,8 +41,30 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
     }
   };
 
+  const tabs = ["Статьи", "Комментарии", "Черновики", "Донаты", "Подробнее"];
+
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <MainLayout contentFullWidth hideComments>
+      <Paper
+        className="d-flex justify-center align-center p-20 mb-15"
+        elevation={0}
+      >
+        <Button variant="contained">
+          {" "}
+          <svg
+            viewBox="0 0 16 16"
+            id="ui_image"
+            width={16}
+            height={16}
+            style={{ marginRight: 10 }}
+          >
+            <path d="M5.378 3.806a1.6 1.6 0 100 3.2 1.6 1.6 0 000-3.2zM15.057.028H.957a.945.945 0 00-.945.944v13.096c0 .522.423.944.945.944h14.099a.944.944 0 00.945-.944V.972a.944.944 0 00-.944-.944zM13.64 13.123H5.992l5.284-5.539 2.836 2.77v2.297c0 .26-.211.472-.472.472zm-1.586-7.025a.933.933 0 00-.779-.403.929.929 0 00-.668.272c-.033.033-.06.07-.086.105l-6.807 7.052h-1.34a.472.472 0 01-.473-.472V2.389c0-.26.212-.472.473-.472H13.64c.26 0 .472.211.472.472v5.767l-2.058-2.058z"></path>
+          </svg>
+          Добавить обложку
+        </Button>
+      </Paper>
       <Paper className="pl-20 pr-20 pt-20 mb-30" elevation={0}>
         <div className="d-flex justify-between">
           <div>
@@ -94,12 +120,16 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
               style={{ height: 42, backgroundColor: "#4683d9", color: "#fff" }}
               variant="contained"
               color="primary"
-              disabled={user.id === profile.id}
             >
               <MessageIcon className="mr-10" />
               Написать
             </Button>
           </div>
+        </div>
+        <div className="mb-10 mt-10">
+          <Link href="settings">
+            <a className={styles.changeDescButton}>Изменить описание</a>
+          </Link>
         </div>
         <div className="d-flex mb-10 mt-10">
           <Typography
@@ -119,20 +149,32 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
         </Typography>
         <Tabs
           className="mt-20"
-          value={0}
+          value={activeTab}
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="Статьи" />
-          <Tab label="Комментарии" />
-          <Tab label="Черновики" />
-          <Tab label="Донаты" />
-          <Tab label="Подробнее" />
+          {tabs.map((tab, id) => {
+            return (
+              <Tab
+                label={tab}
+                onClick={() => setActiveTab(id)}
+                className={styles.tab}
+              />
+            );
+          })}
         </Tabs>
       </Paper>
       <div className="d-flex align-start">
         <div className="mr-20 flex mt-0">
-          <MyPosts id={profile.id} />
+          {activeTab === 0 && (
+            <ProfilePosts id={profile.id} imageUrl={profile.imageUrl} />
+          )}
+          {activeTab === 1 && (
+            <ProfileComments id={profile.id} userId={user.id} />
+          )}
+          {activeTab === 2 && <ProfileDrafts id={profile.id} />}
+          {activeTab === 3 && <ProfileDonates id={profile.id} />}
+          {activeTab === 4 && <ProfileMore id={profile.id} />}
         </div>
         <Paper style={{ width: 300 }} className="p-20 mb-20" elevation={0}>
           <b>Подписчики</b>

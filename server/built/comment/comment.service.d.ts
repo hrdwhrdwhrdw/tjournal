@@ -17,6 +17,7 @@ export declare class CommentService {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
+    findAllById(id: number): Promise<CommentEntity[]>;
     findOne(id: number): Promise<CommentEntity>;
     update(id: number, dto: UpdateCommentDto): Promise<CommentEntity>;
     remove(id: number): Promise<import("typeorm").DeleteResult>;

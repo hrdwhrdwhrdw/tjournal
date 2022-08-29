@@ -44,6 +44,23 @@ export class CommentService {
     });
   }
 
+  async findAllById(id: number) {
+    const arr = await this.repository
+      .createQueryBuilder('c')
+      // .leftJoinAndMapMany(
+      //   'p.comments',
+      //   CommentEntity,
+      //   'comment',
+      //   'comment.postId = p.id'
+      // )
+      .leftJoinAndSelect('c.user', 'user')
+      // .loadRelationCountAndMap('p.commentsCount', 'p.comments', 'comments')
+      .where('c.user.id = :id', { id })
+      .orderBy('c.createdAt', 'DESC')
+      .getMany();
+    return arr;
+  }
+
   findOne(id: number) {
     return this.repository.findOne({
       where: {

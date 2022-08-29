@@ -1,0 +1,55 @@
+.createPostBlock {
+  display: flex;
+  margin-bottom: 15px;
+
+  input {
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    padding-left: 20px;
+    background: #fff;
+    border: none;
+    border-radius: 10px;
+    color: gray;
+    font-size: 16px;
+  }
+}
+
+.createPostAvatar {
+  width: 30px;
+  height: 30px;
+}
+
+.postLinks {
+  background-color: #f4f7f9;
+  padding: 5px 10px;
+  height: 30px;
+  color: #595959;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 30px;
+  display: flex;
+  max-width: 140px;
+  align-items: center;
+
+  &:hover {
+    background-color: #eef2f6;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    fill: #0a1
+  }
+
+  &:nth-child(1) {
+    margin-right: 10px;
+  }
+}
+
+.blue {
+  path {
+    fill: #27e
+  }
+}

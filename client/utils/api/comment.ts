@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
-import { CommentItem } from "./types";
-import { UpdateCommentDto } from '../../../server/src/comment/dto/update-comment.dto';
+import { CommentItemType } from "./types";
+import { UpdateCommentDto } from "../../../server/src/comment/dto/update-comment.dto";
 
 type CreateCommentDto = {
   postId: number;
@@ -9,30 +9,35 @@ type CreateCommentDto = {
 
 export const CommentApi = (instance: AxiosInstance) => ({
   async getAll(postId?: number) {
-    const { data } = await instance.get<CommentItem[]>("/comments", {
+    const { data } = await instance.get<CommentItemType[]>("/comments", {
       params: {
-        postId
+        postId,
       },
     });
+    return data;
+  },
+
+  async getAllById(id: number) {
+    const { data } = await instance.get<CommentItemType[]>(`/comments/user/${id}`);
     return data;
   },
 
   async create(dto: CreateCommentDto) {
     const { data } = await instance.post<
       CreateCommentDto,
-      { data: CommentItem }
+      { data: CommentItemType }
     >("comments", dto);
     return data;
   },
 
   async remove(id: number) {
-    return instance.delete<CommentItem>("/comments/" + id);
+    return instance.delete<CommentItemType>("/comments/" + id);
   },
 
   async update(id: number, dto: CreateCommentDto) {
     const { data } = await instance.patch<
       CreateCommentDto,
-      { data: CommentItem }
+      { data: CommentItemType }
     >(`comments/${id}`, dto);
     return data;
   },

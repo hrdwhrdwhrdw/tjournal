@@ -10,7 +10,7 @@ export type CreateUserDto = {
   fullName: string;
 } & LoginDto;
 
-export type CommentItem = {
+export type CommentItemType = {
   userData: any;
   text: string;
   post: PostItem;

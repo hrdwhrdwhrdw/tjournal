@@ -1,0 +1,12 @@
+.balance {
+  &::after {
+    content: '';
+    display: block;
+    height: 1px;
+    position: absolute;
+    bottom: 0;
+    width: 680px;
+    left: -30px;
+    background-color: #f0f0f0;
+  }
+}

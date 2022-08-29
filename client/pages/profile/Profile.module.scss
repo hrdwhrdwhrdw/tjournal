@@ -15,6 +15,8 @@
   position: relative;
   width: 120px;
   height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 
   &:hover {
     .button {
@@ -33,7 +35,7 @@
   width: 28px !important;
   height: 24px !important;
   opacity: 0;
-  transition: 0.2s ease ;
+  transition: 0.2s ease;
 }
 
 .hidden {
@@ -42,8 +44,29 @@
 
 .image {
   position: absolute;
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
   cursor: zoom-in;
+  object-fit: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.changeDescButton {
+  color: #3766a9;
+  margin-bottom: 15px;
+  margin-top: 15px;
+
+  &:hover {
+    color: #cd192e;
+  }
+}
+
+.tab {
+  text-transform: capitalize;
+  font-size: 17px;
+  font-weight: 400;
+  color: #000
 }

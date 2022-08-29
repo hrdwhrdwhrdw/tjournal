@@ -2,7 +2,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { Button, Paper, Typography } from "@mui/material";
 import React from "react";
-import { CommentItem } from "../../utils/api/types";
+import { CommentItemType } from "../../utils/api/types";
 import { PostItem } from "../CommentItem.tsx/index";
 import PostAuthor from "../PostAuthor";
 import PostFooter from "../PostFooter";
@@ -11,7 +11,7 @@ import styles from "./FullPost.module.scss";
 
 interface FullPostType {
   post: PostItem;
-  comments: CommentItem[];
+  comments: CommentItemType[];
 }
 
 const FullPost: React.FC<FullPostType> = ({ post, comments }) => {

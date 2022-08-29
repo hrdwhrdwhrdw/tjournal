@@ -29,6 +29,9 @@ let CommentController = class CommentController {
     findAll(query) {
         return this.commentService.findAll(+query.postId);
     }
+    findAllById(id) {
+        return this.commentService.findAllById(+id);
+    }
     findOne(id) {
         return this.commentService.findOne(+id);
     }
@@ -55,6 +58,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], CommentController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('user/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], CommentController.prototype, "findAllById", null);
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Param)('id')),

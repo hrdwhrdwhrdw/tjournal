@@ -40,9 +40,9 @@ export const CommentItem: React.FC<CommentItemProps> = ({
         </Link>
       </div>
       <p className={styles.text}>{text}</p>
-      <Link href={`/news/${post.id}`}>
+      <Link href={`/news/${post?.id}`}>
         <a>
-          <span className={styles.postTitle}>{post.title}</span>
+          <span className={styles.postTitle}>{post?.title}</span>
         </a>
       </Link>
     </div>

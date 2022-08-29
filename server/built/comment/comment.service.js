@@ -47,6 +47,15 @@ let CommentService = class CommentService {
             return Object.assign(Object.assign({}, obj), { post: { id: obj.post.id, title: obj.post.title } });
         });
     }
+    async findAllById(id) {
+        const arr = await this.repository
+            .createQueryBuilder('c')
+            .leftJoinAndSelect('c.user', 'user')
+            .where('c.user.id = :id', { id })
+            .orderBy('c.createdAt', 'DESC')
+            .getMany();
+        return arr;
+    }
     findOne(id) {
         return this.repository.findOne({
             where: {

@@ -1,0 +1,27 @@
+.popupWrapper {
+  position: absolute;
+  top: 125%;
+  width: 300px;
+  right: 0;
+}
+
+
+.popupLink {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 8px;
+  padding: 8px 10px;
+  letter-spacing: 0.05em;
+  transition: all .1s linear;
+
+  svg {
+    margin-right: 10px;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}

@@ -1,11 +1,11 @@
-import React from "react";
-import styles from "./PostHeader.module.scss";
-import { PostItem } from "../CommentItem.tsx/index";
-import useTimeConvert from "../../hooks/useTimeConvert";
-import { useState } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Button, Paper } from "@mui/material";
 import Link from "next/link";
-import { Paper, Button } from "@mui/material";
+import React, { useRef } from "react";
+import useOutsideClickHandler from "../../hooks/useOutsideClickHandler";
+import useTimeConvert from "../../hooks/useTimeConvert";
+import { PostItem } from "../CommentItem.tsx/index";
+import styles from "./PostHeader.module.scss";
 
 interface PostHeaderTypes {
   post?: PostItem;
@@ -13,7 +13,8 @@ interface PostHeaderTypes {
 
 const PostHeader: React.FC<PostHeaderTypes> = ({ post }) => {
   const { createTime } = useTimeConvert(post.createdAt);
-  const [isPopup, setIsPopup] = useState(false);
+  const ref = useRef(null);
+  const { isPopup, setIsPopup } = useOutsideClickHandler(ref);
   return (
     <div className={styles.postHeader}>
       <div className={styles.tag}>
@@ -33,7 +34,7 @@ const PostHeader: React.FC<PostHeaderTypes> = ({ post }) => {
       </Link>
       <div className={styles.createTime}>{createTime}</div>
       <div className={styles.popupWrapper}>
-        <MoreHorizIcon onClick={() => setIsPopup(!isPopup)} />
+        <MoreHorizIcon onClick={() => setIsPopup(!isPopup)} ref={ref} />
         {isPopup && (
           <Paper className={styles.popup}>
             <Button>Пожаловаться</Button>

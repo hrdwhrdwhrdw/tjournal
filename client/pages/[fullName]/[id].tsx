@@ -52,7 +52,6 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
         elevation={0}
       >
         <Button variant="contained">
-          {" "}
           <svg
             viewBox="0 0 16 16"
             id="ui_image"
@@ -107,7 +106,7 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
             </Typography>
           </div>
           <div>
-            <Link href="/profile/settings">
+            <Link href={`/${user.fullName}/${user.id}/settings`}>
               <Button
                 style={{ height: 42, minWidth: 45, width: 45, marginRight: 10 }}
                 variant="contained"
@@ -116,11 +115,8 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
                 <SettingsIcon />
               </Button>
             </Link>
-            <Button
-              style={{ height: 42, backgroundColor: "#4683d9", color: "#fff" }}
-              variant="contained"
-              color="primary"
-            >
+
+            <Button style={{ height: 42 }} variant="outlined" color="primary">
               <MessageIcon className="mr-10" />
               Написать
             </Button>

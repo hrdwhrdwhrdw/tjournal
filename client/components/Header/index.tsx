@@ -17,6 +17,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import { selectUserData } from "../../redux/users/userSlice";
 import { Api } from "../../utils/api/index";
 import AuthDialog from "../AuthDialog/AuthDialog";
+import AvatarPopup from "../AvatarPopup";
 import { PostItem } from "../CommentItem.tsx/index";
 import CreatePostButton from "../CreatePost/index";
 import styles from "./Header.module.scss";
@@ -125,18 +126,7 @@ const Header: React.FC = () => {
           <NotificationsNone className={styles.notificationIcon} />
         </IconButton>
         {user ? (
-          <Link href={`/profile/${user.id}`}>
-            <a className="d-flex align-center">
-              <Avatar
-                className={styles.avatar}
-                alt="Remy Sharp"
-                src={`/static/${user.imageUrl}`}
-              >
-                {user.imageUrl ? null : user.fullName[0]}
-              </Avatar>
-              <ExpandMoreIcon />
-            </a>
-          </Link>
+          <AvatarPopup user={user} />
         ) : (
           <div className={styles.loginButton} onClick={openAuthDialog}>
             <PermIdentityIcon /> <b>Войти</b>

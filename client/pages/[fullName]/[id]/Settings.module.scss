@@ -1,0 +1,59 @@
+.settingsWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settingsMain {
+  width: 640px;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settingsMenu {
+  width: 300px;
+  padding: 10px;
+  border-radius: 8px;
+  height: max-content;
+
+  span {
+    padding-left: 15px;
+    padding-top: 15px;
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    color: #000;
+    opacity: 0.9;
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: 400;
+    justify-content: start;
+    padding: 10px;
+
+    &:hover {
+      background-color: rgba(198, 221, 255, 0.5);
+    }
+
+    .active {
+      svg {
+        color: #fcae41
+      }
+    }
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+}
+
+.popupLink {
+  svg {
+    color: rgba(0, 0, 0, 0.65);
+  }
+}

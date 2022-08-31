@@ -8,6 +8,8 @@ import styles from "../../pages/news/Slug.module.scss";
 import { selectUserData } from "../../redux/users/userSlice";
 import { CommentItemType } from "../../utils/api/types";
 import AddCommentForm from "../AddCommentForm";
+import { useRef } from "react";
+import useOutsideClickHandler from "../../hooks/useOutsideClickHandler";
 
 interface PostCommentsType {
   comments: CommentItemType[];
@@ -21,7 +23,9 @@ const PostComments: React.FC<PostCommentsType> = ({
   postId,
 }) => {
   const userData = useAppSelector(selectUserData);
-  const [isPopup, setIsPopup] = useState(false);
+  const ref = useRef(null);
+  const { isPopup, setIsPopup } = useOutsideClickHandler(ref);
+
   const [editInput, setEditInput] = useState("");
   const [editId, setEditId] = useState<number>(null);
 
@@ -38,7 +42,9 @@ const PostComments: React.FC<PostCommentsType> = ({
   };
 
   const onRemoveItem = (id: number) => {
-    setComments((prev: CommentItemType[]) => prev.filter((obj) => obj.id !== id));
+    setComments((prev: CommentItemType[]) =>
+      prev.filter((obj) => obj.id !== id)
+    );
   };
 
   const onCommentEdit = (id: number, text: string) => {
@@ -52,7 +58,7 @@ const PostComments: React.FC<PostCommentsType> = ({
         <div className="d-flex justify-between mb-20">
           <Typography variant="h6">{comments.length} комментария</Typography>
           <div className={styles.popupWrapper}>
-            <TuneIcon onClick={() => setIsPopup(!isPopup)} />
+            <TuneIcon onClick={() => setIsPopup(!isPopup)} ref={ref} />
             <NotificationsNoneIcon />
             {isPopup && (
               <Paper className={styles.popup} elevation={0}>
@@ -79,7 +85,7 @@ const PostComments: React.FC<PostCommentsType> = ({
         )}
         <div
           className={`d-flex mt-25 mb-25 flex-column ${
-            !comments.length ? "justify-center" : ''
+            !comments.length ? "justify-center" : ""
           }`}
         >
           {!comments.length && (

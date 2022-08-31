@@ -27,7 +27,7 @@
     "@types/assets/index.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/[fullName]/index.tsx"  ],
   "exclude": [
     "node_modules",
   ]

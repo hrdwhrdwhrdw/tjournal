@@ -1,4 +1,4 @@
-import { ResponseUser } from '../users/types';
+import { ResponseUser } from '../auth/types';
 import { OutputData } from '@editorjs/editorjs';
 export enum Status {
   LOADING = "loading",

@@ -5,7 +5,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import Comment from "../../components/Comment";
 import { useAppSelector } from "../../hooks/hooks";
 import styles from "../../pages/news/Slug.module.scss";
-import { selectUserData } from "../../redux/users/userSlice";
+import { selectAuthData } from "../../redux/auth/authSlice";
 import { CommentItemType } from "../../utils/api/types";
 import AddCommentForm from "../AddCommentForm";
 import { useRef } from "react";
@@ -22,9 +22,10 @@ const PostComments: React.FC<PostCommentsType> = ({
   setComments,
   postId,
 }) => {
-  const userData = useAppSelector(selectUserData);
+  const userData = useAppSelector(selectAuthData);
   const ref = useRef(null);
   const { isPopup, setIsPopup } = useOutsideClickHandler(ref);
+  console.log(userData);
 
   const [editInput, setEditInput] = useState("");
   const [editId, setEditId] = useState<number>(null);
@@ -97,7 +98,7 @@ const PostComments: React.FC<PostCommentsType> = ({
             <Comment
               key={obj.id}
               user={obj.user}
-              userId={userData.id}
+              userId={obj.user.id}
               text={obj.text}
               createdAt={obj.createdAt}
               currentUserId={userData?.id}

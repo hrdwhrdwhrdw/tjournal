@@ -9,10 +9,11 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import React from "react";
-import { ResponseUser } from "../../redux/users/types";
+import { ResponseUser } from "../../redux/auth/types";
 import { Api } from "../../utils/api";
 import styles from "./Comment.module.scss";
 import { timeSince } from "../../utils/timeSince";
+import { useState } from "react";
 
 type CommentPostProps = {
   user: ResponseUser;
@@ -21,6 +22,7 @@ type CommentPostProps = {
   currentUserId?: number;
   id: number;
   userId: number;
+  isProfile?: boolean;
   onRemoveItem?: (id: number) => void;
   onCommentEdit?: (id: number, text: string) => void;
 };
@@ -32,10 +34,11 @@ const Comment: React.FC<CommentPostProps> = ({
   text,
   createdAt,
   currentUserId,
+  isProfile,
   onRemoveItem,
   onCommentEdit,
 }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -69,7 +72,7 @@ const Comment: React.FC<CommentPostProps> = ({
         <Link href={`/profile/${user.id}`}>
           <a>
             <Avatar className="mr-10" src={`/static/${user.imageUrl}`}>
-              {user.imageUrl ? null : user.fullName[0]}
+              {!user.imageUrl && user.fullName[0]}
             </Avatar>
           </a>
         </Link>
@@ -98,7 +101,9 @@ const Comment: React.FC<CommentPostProps> = ({
             onClose={handleClose}
           >
             <MenuItem onClick={handleClickRemove}>Удалить</MenuItem>
-            <MenuItem onClick={handleClickEdit}>Редактировать</MenuItem>
+            {!isProfile && (
+              <MenuItem onClick={handleClickEdit}>Редактировать</MenuItem>
+            )}
           </Menu>
         </>
       )}

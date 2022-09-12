@@ -49,6 +49,13 @@ export const theme = createTheme({
     MuiInput: {
       styleOverrides: {
         root: {
+          '& .MuiInput-root': {
+            '&:before, :after, :hover:not(.Mui-disabled):before': {
+              border: "none",
+              borderColor: "transparent",
+            },
+          },
+          
           "&.MuiInput:before": {
             border: "none",
             borderColor: "transparent",
@@ -58,6 +65,10 @@ export const theme = createTheme({
             borderColor: "transparent",
           },
           "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+            borderColor: "transparent",
+          },
+          ".MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
             border: "none",
             borderColor: "transparent",
           },
@@ -72,30 +83,6 @@ export const theme = createTheme({
           "&.MuiSelect-root:hover .MuiOutlinedInput-notchedOutline": {
             borderColor: "transparent",
           },
-          // "& .MuiInputBase-input": {
-          //   borderRadius: 4,
-          //   position: "relative",
-          //   border: "none",
-          //   fontSize: 16,
-          //   padding: "10px 26px 10px 12px",
-          //   fontFamily: [
-          //     "-apple-system",
-          //     "BlinkMacSystemFont",
-          //     '"Segoe UI"',
-          //     "Roboto",
-          //     '"Helvetica Neue"',
-          //     "Arial",
-          //     "sans-serif",
-          //     '"Apple Color Emoji"',
-          //     '"Segoe UI Emoji"',
-          //     '"Segoe UI Symbol"',
-          //   ].join(","),
-          //   "&:focus": {
-          //     borderRadius: 4,
-          //     borderColor: "none",
-          //     boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-          //   },
-          // },
         },
       },
     },

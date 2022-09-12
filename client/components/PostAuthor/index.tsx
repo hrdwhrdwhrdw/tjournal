@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Api } from "../../utils/api/index";
-import { ResponseUser } from "../../redux/users/types";
+import { ResponseUser } from "../../redux/auth/types";
 
 interface PostAuthorType {
   authorId: number;

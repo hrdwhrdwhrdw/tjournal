@@ -13,7 +13,7 @@ import { NextPage } from "next";
 import FollowButton from "../components/FollowButton/FollowButton";
 import { MainLayout } from "../layouts/MainLayout";
 import { Api } from "../utils/api";
-import { ResponseUser } from '../redux/users/types';
+import { ResponseUser } from '../redux/auth/types';
 
 interface RatingPropsType {
   users: ResponseUser[];

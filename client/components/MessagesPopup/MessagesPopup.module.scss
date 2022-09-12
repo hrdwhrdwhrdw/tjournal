@@ -1,0 +1,23 @@
+.messagesPopup {
+  margin-bottom: 5px;
+  padding: 10px;
+  position: absolute;
+  width: 375px;
+  top: 100%;
+  right: 0;
+  p {
+    font-size: 13px;
+  }
+  
+}
+
+.title {
+    color: #000;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.subtitle {
+  font-size: 15px;
+  font-weight: 500;
+}

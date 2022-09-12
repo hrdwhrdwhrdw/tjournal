@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -66,8 +66,29 @@ export class UserService {
     });
   }
 
-  update(id: number, dto: UpdateUserDto) {
-    return this.repository.update(id, dto);
+  async update(id: number, dto: UpdateUserDto) {
+    const find = await this.repository.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (!find) {
+      throw new NotFoundException(
+        'Произошла ошибка при редактировании профиля'
+      );
+    }
+
+    await this.repository.update(id, {
+      fullName: dto.fullName,
+      email: dto.email,
+      password: dto.password,
+    });
+
+    return this.repository.findOne({
+      where: {
+        id: id,
+      },
+    });
   }
 
   async upload(id: number, dto: UpdateUserDto, file: Express.Multer.File) {

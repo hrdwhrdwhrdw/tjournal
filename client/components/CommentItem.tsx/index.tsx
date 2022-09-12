@@ -2,7 +2,7 @@ import styles from "./CommentItem.module.scss";
 import { Avatar } from "@mui/material";
 import Link from "next/link";
 import { OutputData } from "@editorjs/editorjs";
-import { ResponseUser } from "../../redux/users/types";
+import { ResponseUser } from "../../redux/auth/types";
 
 export type PostItem = {
   body: OutputData["blocks"];
@@ -31,7 +31,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
     <div className={styles.commentItem}>
       <div className={styles.userInfo}>
         <Avatar style={{ marginRight: 10 }} src={`/static/${user.imageUrl}`}>
-          {user.imageUrl ? null : user.fullName[0]}
+          {!user.imageUrl && user.fullName[0]}
         </Avatar>
         <Link href={`/user/${user.id}`}>
           <a>

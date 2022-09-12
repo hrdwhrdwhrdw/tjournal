@@ -16,6 +16,15 @@ export const RegisterFormSchema = yup
       .string()
       .min(6, "Слишком короткое имя")
       .required("Введите имя и фамилию"),
+    blackList: yup.string(),
+    userList: yup.string(),
   })
   .required()
   .concat(LoginFormSchema);
+
+export const BlackListFormSchema = yup
+  .object({
+    blackList: yup.string(),
+    userList: yup.string(),
+  })
+  .required()

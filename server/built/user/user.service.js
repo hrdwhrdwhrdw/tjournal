@@ -59,8 +59,25 @@ let UserService = class UserService {
             },
         });
     }
-    update(id, dto) {
-        return this.repository.update(id, dto);
+    async update(id, dto) {
+        const find = await this.repository.findOne({
+            where: {
+                id: id,
+            },
+        });
+        if (!find) {
+            throw new common_1.NotFoundException('Произошла ошибка при редактировании профиля');
+        }
+        await this.repository.update(id, {
+            fullName: dto.fullName,
+            email: dto.email,
+            password: dto.password,
+        });
+        return this.repository.findOne({
+            where: {
+                id: id,
+            },
+        });
     }
     async upload(id, dto, file) {
         await this.repository.update(id, {

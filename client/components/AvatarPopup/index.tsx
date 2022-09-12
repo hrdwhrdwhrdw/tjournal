@@ -9,7 +9,7 @@ import { Avatar, Paper } from "@mui/material";
 import Link from "next/link";
 import React, { useRef } from "react";
 import useOutsideClickHandler from "../../hooks/useOutsideClickHandler";
-import { ResponseUser } from "../../redux/users/types";
+import { ResponseUser } from "../../redux/auth/types";
 import styles from "./AvatarPopup.module.scss";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -35,6 +35,8 @@ const AvatarPopup: React.FC<AvatarPopupTypes> = ({ user }) => {
     };
   }, [close, events]);
 
+  const fullName = user.fullName.toLowerCase().split(" ").join("-");
+
   const popupLinks = [
     {
       title: "Создать блог",
@@ -44,28 +46,27 @@ const AvatarPopup: React.FC<AvatarPopupTypes> = ({ user }) => {
     { title: "Создать сообщество", path: "", element: <PeopleOutlineIcon /> },
     { title: "Черновики", path: "", element: <DriveFileRenameOutlineIcon /> },
     { title: "Донаты", path: "", element: <CurrencyRubleIcon /> },
-    { title: "Настройки", path: "", element: <SettingsIcon /> },
+    {
+      title: "Настройки",
+      path: `/${fullName}/${user.id}/settings`,
+      element: <SettingsIcon />,
+    },
     { title: "Выйти", path: "", element: <LogoutIcon /> },
   ];
 
-  const fullName = user.fullName.toLowerCase().split(" ").join("-");
-
   return (
     <>
-      <div className="d-flex align-center justify-between pos-r" ref={ref}>
+      <div className={styles.root} ref={ref}>
         <Link href={`/${fullName}/${user.id}`}>
           <a className="d-flex align-center">
             <Avatar alt="Remy Sharp" src={`/static/${user.imageUrl}`}>
-              {user.imageUrl ? null : user.fullName[0]}
+              {!user.imageUrl && user.fullName[0]}
             </Avatar>
           </a>
         </Link>
         <ExpandMoreIcon
           onClick={() => setIsPopup(!isPopup)}
-          style={{
-            transform: isPopup ? "rotateX(180deg)" : "",
-            cursor: "pointer",
-          }}
+          className={isPopup && styles.rotate}
         />
         {isPopup && (
           <div className={styles.popupWrapper}>

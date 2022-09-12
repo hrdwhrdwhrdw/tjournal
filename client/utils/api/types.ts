@@ -1,6 +1,5 @@
-import { OutputData } from "@editorjs/editorjs";
-import { ResponseUser } from '../../redux/users/types';
-import { PostItem } from '../../redux/posts/types';
+import { PostItem } from "../../redux/posts/types";
+import { ResponseUser } from "../../redux/auth/types";
 export type LoginDto = {
   email: string;
   password: string;
@@ -24,4 +23,4 @@ export type SearchPostDto = {
   body?: string;
   limit?: number;
   take?: number;
-}
+};

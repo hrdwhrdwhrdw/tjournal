@@ -1,17 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Paper } from "@mui/material";
-import React from "react";
+import Alert from "@mui/material/Alert";
+import { setCookie } from "nookies";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { setAuthData } from "../../../redux/auth/authSlice";
+import { Api } from "../../../utils/api/index";
+import { LoginDto } from "../../../utils/api/types";
 import { LoginFormSchema } from "../../../utils/schemas/validation";
 import FormField from "../../FormField";
-import { LoginDto } from "../../../utils/api/types";
-import { UserApi } from "../../../utils/api/user";
-import { setCookie } from "nookies";
-import Alert from "@mui/material/Alert";
-import { useState } from "react";
-import { useAppDispatch } from '../../../hooks/hooks';
-import { setUserData } from "../../../redux/users/userSlice";
-import { Api } from '../../../utils/api/index';
+import { SubmitHandler, FieldValues } from "react-hook-form/dist/types";
 
 interface LoginFormTypes {
   onOpenRegister: () => void;
@@ -20,6 +19,7 @@ interface LoginFormTypes {
 const LoginForm: React.FC<LoginFormTypes> = ({ onOpenRegister }) => {
   const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = useState("");
+
   const form = useForm({
     mode: "onChange",
     resolver: yupResolver(LoginFormSchema),
@@ -33,7 +33,7 @@ const LoginForm: React.FC<LoginFormTypes> = ({ onOpenRegister }) => {
         path: "/",
       });
       setErrorMessage("");
-      dispatch(setUserData(data))
+      dispatch(setAuthData(data));
     } catch (error: any) {
       if (error.message) {
         setErrorMessage(error.response.data);
@@ -44,8 +44,9 @@ const LoginForm: React.FC<LoginFormTypes> = ({ onOpenRegister }) => {
   return (
     <Paper className="p-20" elevation={0}>
       <FormProvider {...form}>
-        {/* @ts-ignore */}
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit as SubmitHandler<FieldValues>)}
+        >
           <FormField name="email" label="Почта" />
           <FormField name="password" label="Пароль" />
           {errorMessage && (

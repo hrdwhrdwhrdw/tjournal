@@ -1,7 +1,6 @@
-import { CircularProgress, Paper } from "@mui/material";
-import React, { useState } from "react";
+import { Paper } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Api } from "../../utils/api/index";
-import { useEffect } from "react";
 import { CommentItemType } from "../../utils/api/types";
 import Comment from "../Comment";
 import Preloader from "../Preloader";
@@ -26,7 +25,8 @@ const ProfileComments: React.FC<ProfileCommentsType> = ({ id, userId }) => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [myComments]);
+
   return (
     <div>
       {isLoading && <Preloader />}
@@ -39,8 +39,9 @@ const ProfileComments: React.FC<ProfileCommentsType> = ({ id, userId }) => {
       )}
       {myComments &&
         myComments.map((comment) => (
-          <Paper className="mb-10" elevation={0} style={{borderRadius: 8}}>
+          <Paper className="mb-10" elevation={0} style={{ borderRadius: 8 }}>
             <Comment
+              isProfile={true}
               id={comment.id}
               userId={userId}
               user={comment.user}

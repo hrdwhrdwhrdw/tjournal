@@ -4,19 +4,19 @@ import { RootState } from "../store";
 import { HYDRATE } from "next-redux-wrapper";
 import { ResponseUser } from "./types";
 
-interface UserState {
+interface AuthState {
   data: ResponseUser | null;
 }
 
-const initialState: UserState = {
+const initialState: AuthState = {
   data: null,
 };
 
-export const userSlice = createSlice({
+export const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserData: (state: UserState, action: PayloadAction<ResponseUser>) => {
+    setAuthData: (state: AuthState, action: PayloadAction<ResponseUser>) => {
       state.data = action.payload;
     },
   },
@@ -30,8 +30,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserData } = userSlice.actions;
+export const { setAuthData } = authSlice.actions;
 
-export const selectUserData = (state: RootState) => state.user.data;
+export const selectAuthData = (state: RootState) => state.user.data;
 
-export default userSlice.reducer;
+export default authSlice.reducer;

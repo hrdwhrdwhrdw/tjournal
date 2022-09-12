@@ -7,11 +7,11 @@ import clsx from "clsx";
 import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { MainLayout } from "../../layouts/MainLayout";
-import { ResponseUser } from "../../redux/users/types";
-import { selectUserData, setUserData } from "../../redux/users/userSlice";
+import { ResponseUser } from "../../redux/auth/types";
+import { selectAuthData, setAuthData } from "../../redux/auth/authSlice";
 import { Api } from "../../utils/api/index";
 import { ISOConverter } from "../../utils/ISOConverter";
 import styles from "./Profile.module.scss";
@@ -20,13 +20,14 @@ import ProfileComments from "../../components/ProfileComments/index";
 import ProfileDrafts from "../../components/ProfileDrafts/index";
 import ProfileDonates from "../../components/ProfileDonates/index";
 import ProfileMore from "../../components/ProfileMore/index";
+import { setProfileData } from "../../redux/profile/profileSlice";
 
 interface ProfileProps {
   profile: ResponseUser;
 }
 
 const Profile: NextPage<ProfileProps> = ({ profile }) => {
-  const user = useAppSelector(selectUserData);
+  const user = useAppSelector(selectAuthData);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -34,16 +35,23 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
     try {
       const file = e.target.files[0];
       const data = await Api().user.upload(file);
-      dispatch(setUserData(data));
+      dispatch(setAuthData(data));
       router.replace(router.asPath);
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    dispatch(setProfileData(profile));
+    return () => {
+      dispatch(setProfileData(null));
+    };
+  }, []);
+
   const tabs = ["Статьи", "Комментарии", "Черновики", "Донаты", "Подробнее"];
 
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState("Статьи");
 
   return (
     <MainLayout contentFullWidth hideComments>
@@ -79,7 +87,7 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
               />
               <Button
                 className={clsx(styles.button, {
-                  [styles.hidden]: user.id !== profile.id,
+                  [styles.hidden]: user?.id !== profile.id,
                 })}
                 variant="contained"
                 style={{ width: 28, height: 24 }}
@@ -106,34 +114,44 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
             </Typography>
           </div>
           <div>
-            <Link href={`/${user.fullName}/${user.id}/settings`}>
+            <Link
+              href={`/${user.fullName.toLowerCase().split(" ").join("-")}/${
+                user?.id
+              }/settings`}
+            >
               <Button
                 style={{ height: 42, minWidth: 45, width: 45, marginRight: 10 }}
                 variant="contained"
-                disabled={user.id !== profile.id}
+                disabled={user?.id !== profile.id}
               >
                 <SettingsIcon />
               </Button>
             </Link>
-
             <Button style={{ height: 42 }} variant="outlined" color="primary">
               <MessageIcon className="mr-10" />
               Написать
             </Button>
           </div>
         </div>
-        <div className="mb-10 mt-10">
-          <Link href="settings">
-            <a className={styles.changeDescButton}>Изменить описание</a>
-          </Link>
-        </div>
+        {user?.id === profile.id && (
+          <div className="mb-10 mt-10">
+            <Link
+              href={`/${user.fullName.toLowerCase().split(" ").join("-")}/${
+                user?.id
+              }/settings`}
+            >
+              <a className={styles.changeDescButton}>Изменить описание</a>
+            </Link>
+          </div>
+        )}
+
         <div className="d-flex mb-10 mt-10">
           <Typography
             style={{ fontWeight: "bold", color: "#35AB66" }}
             className="mr-15"
           >
-            {user.commentsCount > 0 ? (
-              <span>+{user.commentsCount * 2 + user.postsCount * 3}</span>
+            {user?.commentsCount > 0 ? (
+              <span>+{user?.commentsCount * 2 + user?.postsCount * 3}</span>
             ) : (
               "0"
             )}
@@ -145,15 +163,21 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
         </Typography>
         <Tabs
           className="mt-20"
-          value={activeTab}
+          value={tabs.indexOf(activeTab)}
           indicatorColor="primary"
           textColor="primary"
         >
-          {tabs.map((tab, id) => {
+          {tabs.map((tab, _) => {
+            if (
+              (tab === "Черновики" || tab === "Донаты") &&
+              user?.id !== profile.id
+            ) {
+              return <Tab className={styles.hiddenTab} />;
+            }
             return (
               <Tab
                 label={tab}
-                onClick={() => setActiveTab(id)}
+                onClick={() => setActiveTab(tab)}
                 className={styles.tab}
               />
             );
@@ -162,15 +186,15 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
       </Paper>
       <div className="d-flex align-start">
         <div className="mr-20 flex mt-0">
-          {activeTab === 0 && (
+          {activeTab === "Статьи" && (
             <ProfilePosts id={profile.id} imageUrl={profile.imageUrl} />
           )}
-          {activeTab === 1 && (
-            <ProfileComments id={profile.id} userId={user.id} />
+          {activeTab === "Комментарии" && (
+            <ProfileComments id={profile.id} userId={user?.id} />
           )}
-          {activeTab === 2 && <ProfileDrafts id={profile.id} />}
-          {activeTab === 3 && <ProfileDonates id={profile.id} />}
-          {activeTab === 4 && <ProfileMore id={profile.id} />}
+          {activeTab === "Донаты" && <ProfileDrafts id={profile.id} />}
+          {activeTab === "Черновики" && <ProfileDonates id={profile.id} />}
+          {activeTab === "Подробнее" && <ProfileMore id={profile.id} />}
         </div>
         <Paper style={{ width: 300 }} className="p-20 mb-20" elevation={0}>
           <b>Подписчики</b>

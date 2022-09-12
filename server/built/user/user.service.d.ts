@@ -12,7 +12,7 @@ export declare class UserService {
     findAll(): Promise<UserEntity[]>;
     findById(id: any): Promise<UserEntity>;
     findByCond(cond: LoginUserDto): Promise<UserEntity>;
-    update(id: number, dto: UpdateUserDto): Promise<import("typeorm").UpdateResult>;
+    update(id: number, dto: UpdateUserDto): Promise<UserEntity>;
     upload(id: number, dto: UpdateUserDto, file: Express.Multer.File): Promise<UserEntity>;
     search(dto: SearchUserDto): Promise<{
         items: UserEntity[];

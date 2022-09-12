@@ -52,6 +52,7 @@ const Settings: React.FC = () => {
             <Button
               className={styles.popupLink}
               onClick={() => setNavItem(idx)}
+              disableRipple
             >
               {obj.element}
               {obj.title}

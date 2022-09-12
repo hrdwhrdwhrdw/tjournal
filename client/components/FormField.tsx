@@ -1,6 +1,12 @@
-import React, { ReactNode } from "react";
 import { TextField } from "@mui/material";
+import React from "react";
 import { useFormContext } from "react-hook-form";
+import {
+  DeepRequired,
+  FieldError,
+  FieldErrorsImpl,
+  Merge,
+} from "react-hook-form/dist/types";
 
 type FormFieldProps = {
   name: string;
@@ -19,7 +25,13 @@ const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
       fullWidth
       label={label}
       error={!!formState.errors[name]?.message}
-      helperText={formState.errors[name]?.message as ReactNode}
+      // @ts-ignore
+      helperText={
+        formState.errors[name]?.message as Merge<
+          FieldError,
+          FieldErrorsImpl<DeepRequired<any>>
+        >
+      }
     />
   );
 };

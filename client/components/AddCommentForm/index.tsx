@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import Input from "@mui/material/Input";
 import React, { useState } from "react";
 import { Api } from "../../utils/api/index";
-import { CommentItem } from "../../utils/api/types";
+import { CommentItemType } from '../../utils/api/types';
 import styles from "./AddCommentForm.module.scss";
 import { useEffect } from "react";
 
@@ -10,8 +10,8 @@ interface AddCommentFormTypes {
   postId: number;
   editId?: number;
   editInput?: string;
-  onSuccessAddComment: (obj: CommentItem) => void;
-  onSuccessEditComment: (obj: CommentItem) => void;
+  onSuccessAddComment: (obj: CommentItemType) => void;
+  onSuccessEditComment: (obj: CommentItemType) => void;
 }
 
 const AddCommentForm: React.FC<AddCommentFormTypes> = ({
@@ -83,7 +83,7 @@ const AddCommentForm: React.FC<AddCommentFormTypes> = ({
           Отправить
         </Button>
       )}
-      {isClicked && editId !== null && (
+      {isClicked && editId && (
         <Button
           disabled={isLoading}
           className={styles.addButton}

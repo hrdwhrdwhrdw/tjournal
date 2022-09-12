@@ -9,6 +9,7 @@ import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import ListIcon from "@mui/icons-material/List";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Subscriptions from "../Subscriptions";
 
 const menu = [
   { text: "Популярное", icon: <LocalFireDepartmentIcon />, path: "/" },
@@ -21,7 +22,6 @@ const menu = [
 
 const Navbar: React.FC = () => {
   const router = useRouter();
-
   return (
     <div className={styles.nav}>
       <ul>
@@ -46,6 +46,7 @@ const Navbar: React.FC = () => {
           </li>
         ))}
       </ul>
+      <Subscriptions />
     </div>
   );
 };

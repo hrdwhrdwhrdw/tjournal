@@ -10,7 +10,7 @@ import { theme } from "../theme";
 
 import "macro-css";
 import "../styles/globals.scss";
-import { setUserData } from "../redux/users/userSlice";
+import { setAuthData } from "../redux/auth/authSlice";
 import { Api } from "../utils/api";
 
 function App({ Component, pageProps }: AppProps) {
@@ -51,7 +51,7 @@ App.getInitialProps = wrapper.getInitialAppProps(
     async ({ ctx, Component }) => {
       try {
         const userData = await Api(ctx).user.getMe();
-        store.dispatch(setUserData(userData));
+        store.dispatch(setAuthData(userData));
       } catch (error) {
         if (ctx.asPath === "/write") {
           ctx.res?.writeHead(302, {

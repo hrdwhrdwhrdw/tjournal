@@ -1,8 +1,7 @@
-import React from "react";
-import CustomLabel from "../../FormControls/Label/index";
-import { MenuItem, Select, Button } from "@mui/material";
-import CustomSelect from "../../FormControls/Select/index";
+import { Button, MenuItem } from "@mui/material";
 import { useState } from "react";
+import CustomLabel from "../../FormControls/Label/index";
+import CustomSelect from "../../FormControls/Select/index";
 
 const ProfileSettingsForm = () => {
   const [onlineSetting, setOnlineSetting] = useState("0");
@@ -10,6 +9,7 @@ const ProfileSettingsForm = () => {
   const [sortType, setSortType] = useState("0");
   const [showPosts, setShowPosts] = useState("0");
   const [adult, setAdult] = useState("0");
+
   return (
     <form>
       <div>

@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Request,
@@ -56,6 +57,12 @@ export class UserController {
     @UploadedFile() file
   ) {
     return this.userService.upload(+req.user.id, updateUserDto, file);
+  }
+
+  // @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(+id, updateUserDto);
   }
 
   @Get('search')

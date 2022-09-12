@@ -5,9 +5,10 @@ import useComments from "../../hooks/useComments";
 import { CommentItem } from "../CommentItem.tsx/index";
 import Skeleton from "../Skeleton";
 import styles from "./SideComments.module.scss";
+import {useState} from 'react';
 
 export const SideComments = () => {
-  const [visible, setVisible] = React.useState(true);
+  const [visible, setVisible] = useState(true);
   const { comments } = useComments();
 
   const toggleVisible = () => {

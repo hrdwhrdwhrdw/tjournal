@@ -4,13 +4,13 @@ import Alert from "@mui/material/Alert";
 import { setCookie } from "nookies";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { UserApi } from "../../../utils/api/user";
+import { FieldValues, SubmitHandler } from "react-hook-form/dist/types";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { setAuthData } from "../../../redux/auth/authSlice";
+import { Api } from "../../../utils/api/index";
 import { CreateUserDto } from "../../../utils/api/types";
 import { RegisterFormSchema } from "../../../utils/schemas/validation";
 import FormField from "../../FormField";
-import { useAppDispatch } from "../../../hooks/hooks";
-import { setUserData } from "../../../redux/users/userSlice";
-import { Api } from "../../../utils/api/index";
 
 interface RegisterFormFormTypes {
   onOpenLogin: () => void;
@@ -32,7 +32,7 @@ const RegisterForm: React.FC<RegisterFormFormTypes> = ({ onOpenLogin }) => {
         path: "/",
       });
       setErrorMessage("");
-      dispatch(setUserData(data));
+      dispatch(setAuthData(data));
     } catch (error: any) {
       if (error.message) {
         setErrorMessage(error.response.data.message);
@@ -43,8 +43,9 @@ const RegisterForm: React.FC<RegisterFormFormTypes> = ({ onOpenLogin }) => {
   return (
     <Paper className="p-20" elevation={0}>
       <FormProvider {...form}>
-        {/* @ts-ignore */}
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit as SubmitHandler<FieldValues>)}
+        >
           <FormField name="fullName" label="Имя и фамилия" />
           <FormField name="email" label="Почта" />
           <FormField name="password" label="Пароль" />

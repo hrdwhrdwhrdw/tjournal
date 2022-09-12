@@ -7,6 +7,7 @@ export declare class UserController {
     findAll(): Promise<import("./entities/user.entity").UserEntity[]>;
     getProfile(req: any): Promise<import("./entities/user.entity").UserEntity>;
     upload(req: any, updateUserDto: UpdateUserDto, file: any): Promise<import("./entities/user.entity").UserEntity>;
+    update(id: string, updateUserDto: UpdateUserDto): Promise<import("./entities/user.entity").UserEntity>;
     search(dto: SearchUserDto): Promise<{
         items: import("./entities/user.entity").UserEntity[];
         total: number;
